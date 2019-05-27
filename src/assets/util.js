@@ -10,18 +10,17 @@ export const generateMeta = ( { title = '', description = 'Getting things done a
     }
 
     const result = [
-        { name: 'description', content: description },
+        { key: 'description', name: 'description', content: description },
 
-        { name: 'og:title', content: title },
-        { name: 'og:description', content: description },
-        { name: 'og:image', content: image || `${process.env.GRIDSOME_BASE_URL}/img/robin_1.jpg` },
-        { name: 'og:url', content: url },
-
-        { name: 'twitter:card', content: image ? 'summary_large_image' : 'summary' },
-        { name: 'twitter:title', content: title },
-        { name: 'twitter:description', content: description },
-        { name: 'twitter:image', content: image || `${process.env.GRIDSOME_BASE_URL}/robin_icon.png` },
-        { name: 'twitter:site', content: '@suxinjke' },
+        { key: 'og:title', name: 'og:title', content: title },
+        { key: 'og:description', name: 'og:description', content: description },
+        { key: 'og:image', name: 'og:image', content: image || `${process.env.GRIDSOME_BASE_URL}/img/robin_1.jpg` },
+        { key: 'og:url', name: 'og:url', content: url },
+        { key: 'twitter:card', name: 'twitter:card', content: image ? 'summary_large_image' : 'summary' },
+        { key: 'twitter:title', name: 'twitter:title', content: title },
+        { key: 'twitter:description', name: 'twitter:description', content: description },
+        { key: 'twitter:image', name: 'twitter:image', content: image || `${process.env.GRIDSOME_BASE_URL}/robin_icon.png` },
+        { key: 'twitter:site', name: 'twitter:site', content: '@suxinjke' },
     ]
 
     return result
