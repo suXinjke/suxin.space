@@ -1,0 +1,39 @@
+$screen-sm-min: 576px;
+$screen-md-min: 768px;
+$screen-lg-min: 992px;
+$screen-xl-min: 1200px;
+
+@mixin sm {
+    @media (min-width: #{$screen-sm-min}) {
+        @content;
+    }
+}
+
+@mixin md {
+    @media (min-width: #{$screen-md-min}) {
+        @content;
+    }
+}
+
+@mixin lg {
+    @media (min-width: #{$screen-lg-min}) {
+        @content;
+    }
+}
+
+@mixin xl {
+    @media (min-width: #{$screen-xl-min}) {
+        @content;
+    }
+}
+
+$color-primary: #FF8F02;
+$color-secondary: #816949;
+$color-light: #f3f3f3;
+$color-gray: #e0e0e0;
+$color-dark: #333333;
+
+@keyframes emphasize {
+    from { transform: scale( 1 ); }
+    to { transform: scale( 1.03 ); z-index: 3; }
+}

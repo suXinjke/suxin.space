@@ -1,0 +1,67 @@
+@import '@/assets/util.scss';
+
+.collection {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    @include md {
+        flex-direction: row;
+        margin-bottom: 0.25rem;
+        &_sub {
+            flex-direction: column;
+        }
+    }
+
+    &__item {
+        flex-basis: 24rem;
+        min-width: 0;
+
+        &:not(:last-child) {
+            margin: 0 0 0.25rem 0;
+        }
+
+        @include md {
+            flex: 1;
+            height: 24rem;
+
+            display: flex;
+            flex-direction: column;
+
+            &:not(:last-child) {
+                margin: 0 0.25rem 0 0;
+            }
+
+            &_expanded {
+                flex: 2;
+            }
+        }
+    }
+
+    &_sub &__item {
+        &:not(:last-child) {
+            margin: 0 0 0.25rem 0;
+        }
+    }
+
+    &_notes {
+        @include md {
+            margin: 0 -0.25rem;
+            flex-wrap: wrap;
+        }
+    }
+
+    &_notes &__item {
+        height: 24rem;
+
+        @include md {
+            $width: calc(50% - 0.25rem);
+
+            flex-basis: $width;
+            flex-grow: unset;
+            height: 18rem;
+        }
+        margin: 0.125rem;
+    }
+}
