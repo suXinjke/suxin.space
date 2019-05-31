@@ -78,4 +78,9 @@ img {
     margin: 0 auto 1rem auto;
     max-width: 100%;
 }
+table {
+    td {
+        vertical-align: top;
+    }
+}
 </style>
