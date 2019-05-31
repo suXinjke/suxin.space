@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /rbrcz_tourney_revamped/
+Disallow: /items/
