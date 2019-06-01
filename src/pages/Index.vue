@@ -45,16 +45,23 @@
         </section>
 
         <section class="home__section">
+            <HeaderText class="section-header" icon="rocket" header="COLONY WARS RED SUN" />
+            <div class="collection">
+                <ItemClickable class="collection__item" :item="items['cw3-menu']"/>
+                <ItemClickable class="collection__item" :item="items['cw3-ripper']"/>
+                <ItemClickable class="collection__item" :item="items['cw3-oddities']"/>
+            </div>
+        </section>
+
+        <section class="home__section">
             <HeaderText class="section-header" icon="asterisk" header="OTHER" />
             <div class="collection">
                 <ItemClickable class="collection__item" :item="items['about-this-website']"/>
                 <ItemClickable class="collection__item" :item="items['rss']"/>
                 <ItemClickable class="collection__item" :item="items['secretary-bird']"/>
-                <ItemClickable class="collection__item" :item="items['cw3-ripper']"/>
             </div>
             <div class="collection">
                 <ItemClickable class="collection__item" :item="items['blender-goldsource']"/>
-                <ItemClickable class="collection__item" :item="items['cw3-menu']"/>
                 <ItemClickable class="collection__item" :item="items['barasite-eve']"/>
             </div>
         </section>
