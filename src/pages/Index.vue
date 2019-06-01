@@ -73,8 +73,8 @@
 </Layout></template>
 
 <page-query>
-query Home ($page: Int) {
-    allItems (page: $page) {
+query Home {
+    allItems {
         edges {
             node {
                 fileInfo {

@@ -5,8 +5,8 @@
 </Layout></template>
 
 <page-query>
-query Home ($page: Int) {
-    allNotes (page: $page) {
+query Home {
+    allNotes {
         edges {
             node {
                 fileInfo {
