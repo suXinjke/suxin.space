@@ -9,9 +9,9 @@
                     <HeaderText icon="file" header="NOTES" :header-secondary="noteTitle"/>
                 </g-link>
             </nav>
-            <h1 class="header__logo">
+            <component :is="titlePage ? 'h1' : 'h2'" class="header__logo">
                 suXin.space
-            </h1>
+            </component>
         </header>
         <transition name="page" appear>
             <main>
@@ -96,6 +96,7 @@ pre, code {
 
     &__logo {
         margin: 0;
+        font-size: 2rem;
         font-weight: 900;
 
         order: -1;
@@ -122,6 +123,10 @@ export default {
         noteTitle: {
             type: String,
             default: ''
+        },
+        titlePage: {
+            type: Boolean,
+            default: false
         }
     },
 

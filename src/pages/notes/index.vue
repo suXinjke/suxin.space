@@ -1,4 +1,4 @@
-<template><Layout>
+<template><Layout titlePage="true">
     <div class="notes collection collection_notes">
         <ItemClickable class="collection__item" v-for="( item, index ) in items" :key="index" :item="item"/>
     </div>

@@ -1,4 +1,4 @@
-<template><Layout>
+<template><Layout titlePage="true">
     <div class="frog">
         <img class="frog__image" src="/frog.png"/>
         <div class="frog__message">
