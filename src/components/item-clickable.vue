@@ -53,7 +53,7 @@ export default {
                 return false
             }
 
-            return this.item.link || `/items/${this.item.fileInfo.name}/`
+            return this.currentItemAttributes.link || `/items/${this.item.fileInfo.name}/`
         },
         link_target: function() {
             if ( !this.link || this.item.linkInternal ) {
