@@ -17,7 +17,7 @@ const addLinksToImages = () => tree => unistMap( tree, node => {
 const siteUrl = 'https://suxin.space'
 
 module.exports = {
-    siteName: 'suxin.space',
+    siteName: 'suXin space',
     siteUrl,
 
     plugins: [
@@ -44,7 +44,7 @@ module.exports = {
                 // Optional: any properties you wish to set for `Feed()` constructor
                 // See https://www.npmjs.com/package/feed#example for available properties
                 feedOptions: {
-                    title: 'suxin.space',
+                    title: 'suXin space',
                     link: `${siteUrl}/notes/`,
                     description: 'Getting things done and sharing how',
                     language: 'en',

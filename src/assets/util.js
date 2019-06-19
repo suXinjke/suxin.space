@@ -3,7 +3,7 @@ export const generateMeta = ( { title = '', description = 'Getting things done a
     if ( title ) {
         title += ' - '
     }
-    title += 'suxin.space'
+    title += 'suXin space'
 
     if ( image && !image.startsWith( 'http' ) ) {
         image = process.env.GRIDSOME_BASE_URL + image

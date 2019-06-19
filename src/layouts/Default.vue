@@ -10,7 +10,7 @@
                 </g-link>
             </nav>
             <component :is="titlePage ? 'h1' : 'h2'" class="header__logo">
-                suXin.space
+                suXin space
             </component>
         </header>
         <transition name="page" appear>
