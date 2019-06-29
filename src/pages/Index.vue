@@ -1,4 +1,4 @@
-<template><Layout titlePage="true">
+<template><Layout :titlePage="true">
     <div class="home">
         <section class="home__section">
             <HeaderText class="section-header" icon="user" header="ABOUT" />
