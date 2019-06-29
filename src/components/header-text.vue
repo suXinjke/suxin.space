@@ -1,11 +1,11 @@
 <template>
-    <div :class="{ 'header-text': true }" >
+    <div :class="{ 'header-text': true, 'header-text_marquee': marquee }" >
         <div class="header-text__icon-container" v-if="icon">
             <font-awesome-icon class="header-text__icon" :icon="[ iconStyle || 'fas', icon ]"/>
         </div>
         <div class="header-text__content" :title="title">
             <h3 class="header-text__secondary" v-if="headerSecondary">{{ headerSecondary }}</h3>
-            <h2 class="header-text__primary" v-if="header">{{ header }}</h2>
+            <h2 class="header-text__primary" v-if="header" :style="headerStyle" ref="headerTextPrimary" @transitionend="onTransitionEnd">{{ header }}</h2>
         </div>
     </div>
 </template>
@@ -47,6 +47,8 @@
         font-weight: 900;
         font-size: 1.3em;
         margin: 0;
+        opacity: 1;
+        transition: opacity 0.2s linear;
     }
     &__secondary {
         font-weight: 400;
@@ -58,16 +60,24 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    &_marquee &__primary {
+        text-overflow: initial;
+    }
 }
 </style>
 
 <script>
 export default {
+    data: () => ( {
+        marquee_moving: false
+    } ),
     props: {
         icon: String,
         iconStyle: String,
         header: String,
-        headerSecondary: String
+        headerSecondary: String,
+        marquee: Boolean
     },
     computed: {
         title: function() {
@@ -77,6 +87,46 @@ export default {
             }
             result += ( this.header || '' )
             return result.trim()
+        },
+
+        headerStyle: function() {
+            if ( !this.marquee_moving ) {
+                return ''
+            }
+
+            const { clientWidth, scrollWidth } = this.$refs.headerTextPrimary
+            let offset = scrollWidth - clientWidth
+
+            if ( offset === 0 ) {
+                return ''
+            }
+
+            offset += 10
+
+            const time = offset / 90
+
+            return `
+                margin-left: -${offset}px;
+                opacity: 0;
+                transition: margin-left ${time}s linear 0.6s, opacity 0.2s linear ${time+1.5}s;
+            `
+        }
+    },
+
+    watch: {
+        marquee: function( newVal ) {
+            this.marquee_moving = newVal
+        }
+    },
+
+    methods: {
+        onTransitionEnd: function( e ) {
+            if ( e.propertyName === 'opacity' ) {
+                this.marquee_moving = false
+                if ( this.marquee ) {
+                    this.marquee_moving = true
+                }
+            }
         }
     }
 }

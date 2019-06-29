@@ -1,5 +1,5 @@
 <template>
-    <div class="item">
+    <div class="item" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
         <div :key="item.image" class="js-only item__image" v-lazy:background-image="item.image" :style="imageStyle">
             <font-awesome-icon class="item__image-icon" icon="stopwatch"/>
             <font-awesome-icon class="item__error-icon" icon="times"/>
@@ -14,6 +14,7 @@
                 :header-secondary="item.subtitle"
                 :icon="item.icon"
                 :iconStyle="item.iconStyle"
+                :marquee="hovered"
             />
         </div>
     </div>
@@ -21,6 +22,9 @@
 
 <script>
 export default {
+    data: () => ( {
+        hovered: false
+    } ),
     computed: {
         imageStyle: function() {
             const { imagePos = '' } = this.item
@@ -29,6 +33,14 @@ export default {
     },
     props: {
         item: Object,
+    },
+    methods: {
+        onMouseEnter: function() {
+            this.hovered = true
+        },
+        onMouseLeave: function() {
+            this.hovered = false
+        }
     }
 }
 </script>
