@@ -41,7 +41,9 @@ body {
 }
 
 .readable {
-    line-height: 1.375em;
+    p, li {
+        line-height: 1.375em;
+    }
 
     .hljs {
         font-size: 0.875em;
