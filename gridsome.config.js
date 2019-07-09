@@ -7,7 +7,7 @@ const addLinksToImages = () => tree => unistMap( tree, node => {
 
         return {
             ...node,
-            value: `<a href="${imageSrc}" target="_blank" rel="noopener">${node.value}</a>`
+            value: `<a href="${imageSrc}" title="${node.alt}" target="_blank" rel="noopener">${node.value}</a>`
         }
     } else if ( node.type === 'image' ) {
         return {
