@@ -21,7 +21,7 @@ The resulting bundle I was getting would grow with each note added, and I wouldn
 
 ![The bloat 2](./img/nuxt-bloated-markdown-blogs/bloat2.png)
 
-At this point I want to blame my requirements on content management, and believe that **Nuxt** isn't really suited for **Markdown blogging** out of box. In the section [**Problematic dynamic routes and nuxt-link**](/notes/about-this-website) of my previous note, I already considered the solution I've got as *hacky*. Looking back at it, I could ask myself:
+At this point I want to blame my requirements on content management, and believe that **Nuxt** isn't really suited for **Markdown blogging** out of box. In the section [**Problematic dynamic routes and nuxt-link**](/notes/about-this-website#problematic-dynamic-routes-and-nuxt-link) of my previous note, I already considered the solution I've got as *hacky*. Looking back at it, I could ask myself:
 * *Why do I have to pre-generate a JSON with a list of notes?*
 * *Is putting **require** calls into **computed** even legal?*
 * *Is **Nuxt's asyncData** method the only thing that I could rely on for retrieving the content?*
