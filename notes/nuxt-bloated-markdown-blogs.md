@@ -10,7 +10,7 @@ In this note I want to address problems I had with managing Markdown files on **
 
 ## **The bloat**
 
-![The bloat](/img/mistake/bloat.png)
+![The bloat](./img/nuxt-bloated-markdown-blogs/bloat.png)
 
 The resulting bundle I was getting would grow with each note added, and I wouldn't understand why exactly due to my convoluted **Nuxt/Webpack** setup. It's just unacceptable that no matter what page I open, it'd have ***four-five full copies*** of each note. So if you were to open this note on a previous version of my website, you'd get:
 * Pre-rendered note as part of it's **HTML**
@@ -19,7 +19,7 @@ The resulting bundle I was getting would grow with each note added, and I wouldn
 * **Vue template** based on all of this
 * **Vue template renderer** based on all of this, because I wanted to make **Vue** components work in my **Markdown** files.
 
-![The bloat 2](/img/mistake/bloat2.png)
+![The bloat 2](./img/nuxt-bloated-markdown-blogs/bloat2.png)
 
 At this point I want to blame my requirements on content management, and believe that **Nuxt** isn't really suited for **Markdown blogging** out of box. In the section [**Problematic dynamic routes and nuxt-link**](/notes/about-this-website) of my previous note, I already considered the solution I've got as *hacky*. Looking back at it, I could ask myself:
 * *Why do I have to pre-generate a JSON with a list of notes?*
@@ -128,7 +128,7 @@ There's no actual content or meta description retrieved (for social media and RS
 
 The data for each page seem to be contained in their own JSON files, which are fetched on page transitions. The funny thing is: *this is perhaps something you could also make on your **Nuxt** setup*, but neither me or published articles bothered enough to try doing it. Besides, why waste time trying when it's already decently handled by a plugin and **GraphQL**?
 
-![No bloat](/img/mistake/no-bloat.png)
+![No bloat](./img/nuxt-bloated-markdown-blogs/no-bloat.png)
 
 The generated **HTML** files theirselves contain exactly what I expect: **pre-rendered content** and **inline Javascript to hydrate Vue**. It can be somewhat excessive for some content like code snippets, but when you transition to other pages, you still get a smaller **JSON file with one copy of the content** instead.
 

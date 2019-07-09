@@ -11,13 +11,15 @@ During model extraction, **BDSROC** was found, which I immediately assumed to be
 
 I've purchased several torpedos afterwards and recorded a video so I could check it frame-by-frame and catch a glimpse of the torpedo, which indeed has a face on it. **I like how this easter egg is hidden in a plain sight**, you can't really notice it because of the sparks and difficulties with approaching it, not even mentioning you wouldn't even try to approach the torpedo as it may kill you in a blast.
 
-![BDSROC](/img/cw3-oddities/bds0.jpg)
-![BDS 9000 Description](/img/cw3-oddities/bds1.jpg)
-![It's actually an easter egg](/img/cw3-oddities/bds2.jpg)
+![BDSROC](./img/cw3-oddities/bds0.jpg)
+
+![BDS 9000 Description](./img/cw3-oddities/bds1.jpg)
+
+![It's actually an easter egg](./img/cw3-oddities/bds2.jpg)
 
 I contacted one of the devs behind **Red Sun**, **Julian Gold**, wondering who's the portrayed person is. I was told it's **Dave Semmens**, which clicked instantly: **BDS**: **Big Dave Semmens**, and you even have that in credits!
 
-![Big Dave Semmens](/img/cw3-oddities/bds3.jpg)
+![Big Dave Semmens](./img/cw3-oddities/bds3.jpg)
 
 ## **Unused models**
 
@@ -25,71 +27,75 @@ I contacted one of the devs behind **Red Sun**, **Julian Gold**, wondering who's
 
 **Pirate medium ship?** Compared to other pirate ships, I find this design weird, mostly due to these fins at front.
 
-![PIRMED](/img/cw3-oddities/pirmed.jpg)
+![PIRMED](./img/cw3-oddities/pirmed.jpg)
 
 ### **RSUN4**
 
 One of the stages of **Red Sun**. Maybe there could be more missions including it. This particular model has weird floating rock. It's similar higher quality model is featured in one of the FMVs.
 
-![RSUN4](/img/cw3-oddities/rsun4.jpg)
-![RSUN4 like model in FMV](/img/cw3-oddities/rsun42.jpg)
+![RSUN4](./img/cw3-oddities/rsun4.jpg)
+
+![RSUN4 like model in FMV](./img/cw3-oddities/rsun42.jpg)
 
 ### **ROOK**
 
 It's hard to say if this is some kind of lifeform that was weaponized (similar to **Tolrasaurs**), a weird ship design for some faction, or something from **Sha'Har** which doesn't really follow their overall design.
 
-![ROOK](/img/cw3-oddities/rook.jpg)
+![ROOK](./img/cw3-oddities/rook.jpg)
 
 ### **BDOOR**
 
 Rather detailed blast door?
 
-![BDOOR](/img/cw3-oddities/bdoor.jpg)
+![BDOOR](./img/cw3-oddities/bdoor.jpg)
 
 ### **CALDE2**
 
 Some kind of guarded outpost, file name implies it belongs to **Calderas**.
 
-![CALDE2](/img/cw3-oddities/calde2.jpg)
+![CALDE2](./img/cw3-oddities/calde2.jpg)
 
 ### **Dropships**
 
 Several unused dropships, based on file names I assume these are for **Dirt Warriors**, **Pirates** and **Rebels**, the latter having unique carrier.
 
-![Dirt Warrior Dropship](/img/cw3-oddities/drodir.jpg)
-![Pirate Dropship](/img/cw3-oddities/dropir.jpg)
-![Rebel Dropship](/img/cw3-oddities/droreb.jpg)
+![Dirt Warrior Dropship](./img/cw3-oddities/drodir.jpg)
+
+![Pirate Dropship](./img/cw3-oddities/dropir.jpg)
+
+![Rebel Dropship](./img/cw3-oddities/droreb.jpg)
 
 ### **Empiret ship with a searchlight**
 
 Could be a part of some stealth based mission, or maybe just looking for something on the ground level.
 
-![EMPSER](/img/cw3-oddities/empser.jpg)
+![EMPSER](./img/cw3-oddities/empser.jpg)
 
 ### **SENSOR**
 
 Kinda resembles a satellite, since it's called sensor, could also be a part of stealth mission?
 
-![BDOOR](/img/cw3-oddities/sensor.jpg)
+![BDOOR](./img/cw3-oddities/sensor.jpg)
 
 ### **MINRO1**
 
 If it's indeed mining robot, I'd say it looks weird. Maybe it's supposed to be a ground mining outpost.
 
-![MINRO1](/img/cw3-oddities/minro1.jpg)
+![MINRO1](./img/cw3-oddities/minro1.jpg)
 
 ### **REFSML**
 
 Something related to the refineries? Ship design is similar to one the pirates have.
 
-![REFSML](/img/cw3-oddities/refsml.jpg)
+![REFSML](./img/cw3-oddities/refsml.jpg)
 
 ### **Ground units**
 
 **Red Sun** has several ground units, **Navy** in **The Necessity** mission, and **Sha'Har** in the credits (watch the ground). But there's also **League** ground unit and **Refinery worker** (if **REFGND** actually means it) not used anywhere.
 
-![League ground unit](/img/cw3-oddities/leagnd.jpg)
-![Refinery worker?](/img/cw3-oddities/refgnd.jpg)
+![League ground unit](./img/cw3-oddities/leagnd.jpg)
+
+![Refinery worker?](./img/cw3-oddities/refgnd.jpg)
 
 ## **Rushed models**
 
@@ -99,24 +105,27 @@ What's remarkable about **Colony Wars Red Sun** is that **it was developed only 
 
 This insanely huge ship only makes a short appearance in *one* mission. The moment you approach the ship - *it's gone in explosion*. Due to that you probably won't notice the fact that one of it's turrets is flipped by 90 degrees. The model also has incorrect texture applied on one of the jet flames, but since the ship is stationary in this mission, player will never see these jet flames.
 
-![DIRFLT](/img/cw3-oddities/dirflt.jpg)
-![DIRFLT](/img/cw3-oddities/dirflt2.jpg)
+![DIRFLT](./img/cw3-oddities/dirflt.jpg)
+
+![DIRFLT](./img/cw3-oddities/dirflt2.jpg)
 
 ### **Rushed UV**
 
 When I initially ripped playable ships, I immediately noticed they have rushed UV mapping, like on screenshot below. Simply flipping a half of this thruster UV fixes it, but it's not like anyone's gonna notice this in-game.
 
-![PLAHA1](/img/cw3-oddities/plaha1.jpg)
+![PLAHA1](./img/cw3-oddities/plaha1.jpg)
 
 **Navy dropship** has much severe problem and I couldn't believe it's actually like that in-game.
 
-![DRONAV](/img/cw3-oddities/dronav.jpg)
-![DRONAV](/img/cw3-oddities/dronav2.jpg)
+![DRONAV](./img/cw3-oddities/dronav.jpg)
+
+![DRONAV](./img/cw3-oddities/dronav2.jpg)
 
 Here's rather amusing **Navy research ship** with label reflected. It's applied correctly on the other side.
 
-![Navy research ship](/img/cw3-oddities/navy.jpg)
-![Navy research ship](/img/cw3-oddities/navy2.jpg)
+![Navy research ship](./img/cw3-oddities/navy.jpg)
+
+![Navy research ship](./img/cw3-oddities/navy2.jpg)
 
 ## **Amusing text**
 

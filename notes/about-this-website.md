@@ -17,9 +17,11 @@ Weirdly enough, I consider playing **Hitman** the first thing that led to creati
 While today you can't impress anyone by using tiles, the way they were arranged and presented felt very straightforward and on-point.
 Somehow they made me think that the game has a lot to offer: *what's this? and what is that?* I keep occasionally checking these menus over and over again even after I moved onto **Hitman 2**.
 
-![Hitman Menu](/img/about-this-website/hitman_menu.jpg)
-![Hitman Menu](/img/about-this-website/hitman_menu2.jpg)
-![Hitman Menu](/img/about-this-website/hitman_menu3.jpg)
+![Hitman Menu](./img/about-this-website/hitman_menu.jpg)
+
+![Hitman Menu](./img/about-this-website/hitman_menu2.jpg)
+
+![Hitman Menu](./img/about-this-website/hitman_menu3.jpg)
 
 I was job hunting during this period, and I realised that despite understanding how fancy HTML / CSS work, I had nothing to prove it: my past projects were more focused on ***do*** rather than ***see***, the latter dominating every website which is supposed to present you, your projects or business.
 Compared to these, my approach to design always seemed bland, and I don't even care minimalism, it just always felt right to go that way.
@@ -75,6 +77,7 @@ This led me to questioning if I could find a free alternative, most of the stuff
 Made by [The Pangram Pangram Foundry](https://pangrampangram.com), this font hits the exact spot for me, I'd use it here if not for one problem: ***It's not free*** as it may seem. The website says it's free for personal use, but attempt to get free font pack via email only got me **Light** and **Bold** variants, which is obviously not sufficient and I don't even need **Light**.
 
 ![Neue Montreal](https://cdn.shopify.com/s/files/1/2642/6578/products/NeueMontreal-5a_1296x.png)
+
 ![Neue Montreal](https://cdn.shopify.com/s/files/1/2642/6578/products/NeueMontreal-6a_1296x.png)
 
 ### Aileron
@@ -82,6 +85,7 @@ Made by [The Pangram Pangram Foundry](https://pangrampangram.com), this font hit
 This one is made by [TipoType](https://tipotype.com/), while some of the letters seem more thin and off, I still get the **Helvetica** professional feel from it. And this font is ***truly free for personal use***. What you're reading right now on this website is powered by **Aileron**.
 
 ![Aileron](https://tipotype.com/wp-content/uploads/2017/09/aileron-01.png)
+
 ![Aileron](https://tipotype.com/wp-content/uploads/2017/09/aileron-02.png)
 
 ## **Colors**
@@ -307,5 +311,6 @@ All of this on entirely different topics, it doesn't have to stay 100% technical
 
 ### Bonus weird early layout tests
 
-![Layout test](/img/about-this-website/wip_1.jpg)
-![Layout test](/img/about-this-website/wip_2.jpg)
+![Layout test](./img/about-this-website/wip_1.jpg)
+
+![Layout test](./img/about-this-website/wip_2.jpg)

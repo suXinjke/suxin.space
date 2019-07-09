@@ -28,7 +28,7 @@ if it's possible to rip it's model to use in some game prototypes or whatever.
 *I really wanted it*, and this time I've got a vague idea on how I could try extracting the model,
 the idea that will also be used later for the initial model rips from **Red Sun**.
 
-![Hex ship](/img/cw-reverse-engineering-models/hex.jpg)
+![Hex ship](./img/cw-reverse-engineering-models/hex.jpg)
 
 ## **Hands-on approach**
 
@@ -66,7 +66,7 @@ you can also filter values that are less than `0x80200000`.
 In case of **Red Sun**, by following these tips and switching between ships in ship selection menu,
 I reduced search results to three pointers and two distinct addresses.
 
-![Selected ship on the left, and three pointers with two distinct addresses related to it](/img/cw-reverse-engineering-models/pointers.png)
+![Selected ship on the left, and three pointers with two distinct addresses related to it](./img/cw-reverse-engineering-models/pointers.png)
 
 With written down address of Playstation RAM beginning (relative to emulator), I can add one of these pointers to get the potential
 location of model. **Obviously the byte with value of `80` must be omitted**.
@@ -76,7 +76,7 @@ addresses: `0x000DDBD0`, I get:
 
 `0x00A8B6A0 + 0x000DDBD0 = 0x00B69270`
 
-![Model data on selected ship, with some of the vertexes corrupted](/img/cw-reverse-engineering-models/pointers2.png)
+![Model data on selected ship, with some of the vertexes corrupted](./img/cw-reverse-engineering-models/pointers2.png)
 
 This led me to a memory section with loaded model data. By overwriting random
 portions of this memory section, you can see how it affects the displayed ship.
@@ -109,7 +109,7 @@ By dumping bytes related to vertexes, I parsed them with a **Python script** usi
 the parsed vertexes were then written into [Wavefront OBJ](https://en.wikipedia.org/wiki/Wavefront_.obj_file) file,
 which was loaded in **Blender**, resulting in this point cloud:
 
-![Vertexes of Hex ship](/img/cw-reverse-engineering-models/pointcloud.jpg)
+![Vertexes of Hex ship](./img/cw-reverse-engineering-models/pointcloud.jpg)
 
 In a similar manner, I figured out how **faces** and **UV mapping** were stored and also parsed and put them into **OBJ file**.
 **The only thing left was extracting textures**. During that time I only wanted to extract this particular ship and I was
@@ -124,9 +124,9 @@ Nevertheless, I still went through this method, on the screenshot below you may 
 **and palettes on the right**, one for each ship's texture. So I had to find correct combinations
 of textures and palettes, make tons of screenshots and combine them together to make a proper texture.
 
-![PSX VRAM](/img/cw-reverse-engineering-models/psxvram.png)
+![PSX VRAM](./img/cw-reverse-engineering-models/psxvram.png)
 
-![Hex](/img/cw-reverse-engineering-models/hex2.jpg)
+![Hex](./img/cw-reverse-engineering-models/hex2.jpg)
 
 The ship models from **Red Sun** were ripped in **October 2017** in a similar manner, the major
 difference was extracting textures directly from **VRAM section** and converting them into **PNG files**.
@@ -135,8 +135,9 @@ The models theirselves were also more difficult to grasp, with multiple meshes a
 After extraction of these ships, **I wondered if I could dare to get all models**. It took **1 year and 7 months** before I played
 the game again and actually **dared**.
 
-![Red Sun untextured ships](/img/cw-reverse-engineering-models/red-sun-ships.jpg)
-![Snapdragon](/img/cw-reverse-engineering-models/red-sun-snapdragon.jpg)
+![Red Sun untextured ships](./img/cw-reverse-engineering-models/red-sun-ships.jpg)
+
+![Snapdragon](./img/cw-reverse-engineering-models/red-sun-snapdragon.jpg)
 
 ## **Resource extraction**
 
@@ -146,15 +147,15 @@ Obviously, the classic way of ripping the file directly was the only option.
 
 We're dealing with **GAME.RSC**, it's the only file that may have models because the others just don't fit. **RSC** extension also hints that it's a **ReSourCe file**.
 
-![Red Sun contents](/img/cw-reverse-engineering-models/directory.png)
+![Red Sun contents](./img/cw-reverse-engineering-models/directory.png)
 
 **The Memory Viewer** in **Cheat Engine** is absolutely great, ~~but unfortunately it seems impossible to load a file~~ and you can also use it to view file contents. The option is somewhat hidden in a highlighted menu entry. I really wish I knew it's possible beforehand, because Cheat Engine also has struct dissection tools, several display modes and more. Instead, I was using [**HxD** hex editor](https://mh-nexus.de/en/hxd/). I think I'd still prefer **HxD** for very quick previews and it's tab support.
 
-![Cheat Engine](/img/cw-reverse-engineering-models/ce-process.png)
+![Cheat Engine](./img/cw-reverse-engineering-models/ce-process.png)
 
 I'm immediately presented with what could be **file names**. Remember to look for patterns and make assumptions: the gap between the beginning of each name is `0x14` bytes, which hints at the fixed structure. If you also consider the fact it's an old Playstation game: the file names are short by design - it's something that filesystem might have required, akin to **DOS** era. Assuming that file names are of fixed length, I also notice something at the end of the selected entry on screenshot. Take note of `A9 00 00 02` on **CREDITSB_TIM**, and then compare it to the ending of previous entry - **CREDITSA_TIM** which has `A8 00 00 02`, while I have no idea what `02` is, the first two bytes have adjacent values that I could interpret as some kind of index.
 
-![GAME.RSC](/img/cw-reverse-engineering-models/game-rsc1.png)
+![GAME.RSC](./img/cw-reverse-engineering-models/game-rsc1.png)
 
 Since I was not using Cheat Engine initially to interpret such structures, I started making a basic **node.js** script. My approach is to map structures to functions that accept **Buffer of file contents** with an **offset to read from**, and return an **object with meaningful info**. The default function arguments are only provided to give **Visual Studio Code** a hint for code completion.
 
@@ -193,13 +194,13 @@ Example output:
 
 While scrolling around I've also found more text data, which looked like mission scripts. There were also mission briefings in a same plain text format and more. It was only a matter of correctly mapping one of the file names at the beginning to the actual file contents. For now, I had some potential indexes but not the location of files.
 
-![Mission data](/img/cw-reverse-engineering-models/game-rsc2.png)
+![Mission data](./img/cw-reverse-engineering-models/game-rsc2.png)
 
 Going back to file names, I notice them being in alphabetical order, but sometimes it starts over again. For me this hints at several directories. For some reason it took me a day or two to atleast try looking for directory entries, which I've found before the file names.
 
-![New directory](/img/cw-reverse-engineering-models/game-rsc3.png)
+![New directory](./img/cw-reverse-engineering-models/game-rsc3.png)
 
-![Directory entries](/img/cw-reverse-engineering-models/game-rsc4.png)
+![Directory entries](./img/cw-reverse-engineering-models/game-rsc4.png)
 
 The first 4 bytes of selection above indicate an offset where the file names are located for this directory: `0x4E18`, and the next 4 bytes specify amount of files: `0x39` (57 files). These assumptions can be quickly evaluated by using **Go To** function in your hex editor and then making a selection or moving by offset of file entry structure size multiplied by amount of files.
 
@@ -246,7 +247,7 @@ function parseResources( FILE = Buffer.alloc( 0 ) ) {
 
 The previously mentioned `F8 5E 00 00` marks the beginning of file table. At the beginning of it I once again have what I've figured out to be an amount value, and then a pair of what perhaps could be **File offset** and then maybe a **File type**?
 
-![File offset table](/img/cw-reverse-engineering-models/game-rsc5.png)
+![File offset table](./img/cw-reverse-engineering-models/game-rsc5.png)
 
 So if one of the previously parsed file entries has an index of `0`, I'd assume it to be at `0x126E4`. By combining the directories with file names and this table, you now know where each file is located, **but there's no size info**.
 
@@ -275,7 +276,7 @@ function parseFileOffsets( FILE = Buffer.alloc( 0 ), offset = 0 ) {
 
 With all of this info I had at this point, I was ready to extract the files. There were no names for directories so I had to name them myself based on directory index.
 
-![Extracted files](/img/cw-reverse-engineering-models/game-rsc6.png)
+![Extracted files](./img/cw-reverse-engineering-models/game-rsc6.png)
 
 Before moving on to parsing model files, I want to comment on a mystery **dummy files** directory on this screenshot. Like I mentioned, some of the entries in file offset table have a calculated size of zero, and so it happened that some of the named files referred to these zero-sized entries. The file names made me assume that they could be textures, but if they were textures, why there were only 228 of them? Why they don't have **TIM** extension like on some of the other non-dummy files? *Maybe these are packed differently?* But most likely I missed something. I will leave this mystery as it is, I don't care about these files much.
 
@@ -352,7 +353,7 @@ function parseFace( FILE = Buffer.alloc( 0 ), offset = 0 ) {
 
 Compared to the only ship that I've ripped from **Colony Wars: Vengeance**, the models in **Red Sun** turned out to be much more complicated because they consist of several parts. I figured it out during in-memory approach by accidentally making a portion of ship disappear, or making it huge like on screenshot below:
 
-![Very huge Zaibatsu](/img/cw-reverse-engineering-models/red-sun-huge-zaibatsu.jpg)
+![Very huge Zaibatsu](./img/cw-reverse-engineering-models/red-sun-huge-zaibatsu.jpg)
 
 Even if you find where these separate objects are located and extract their mesh - the position offset and other required data doesn't come with it.
 
@@ -360,7 +361,7 @@ Even if you find where these separate objects are located and extract their mesh
 
 Every model may consist of several objects, every object can be a child of the other object. **There can be several levels of nesting**. The actual objects and their mesh may not go in sequential order as declared in **object meta section** - not paying attention to that resulted in faulty model exports with incorrect offsets:
 
-![Incorrect offsets](/img/cw-reverse-engineering-models/faulty-offsets.png)
+![Incorrect offsets](./img/cw-reverse-engineering-models/faulty-offsets.png)
 
 You also have to apply offsets correctly when exporting to **OBJ** file, because of the mentioned several levels of nesting. Just summing the required offsets together did it right.
 
@@ -460,7 +461,7 @@ If said number is `0` - scale is 1 for all dimensions; value of `1` will result 
 
 Here's the **final form of Red Sun** with all offsets, rotations and scaling applied correctly:
 
-![Red Sun untextured](/img/cw-reverse-engineering-models/red-sun.jpg)
+![Red Sun untextured](./img/cw-reverse-engineering-models/red-sun.jpg)
 
 ### **Level of detail**
 
@@ -468,7 +469,7 @@ Another thing that took me awhile to figure is the fact that some models have **
 
 This was during the time when I didn't separate **object** and **it's mesh**. Turns out every object has mesh counter so I also relied on that during parsing, but my mistake was combining these mesh into one, which resulted in z-fighting:
 
-![Red Sun merged LOD](/img/cw-reverse-engineering-models/red-sun-lod.gif)
+![Red Sun merged LOD](./img/cw-reverse-engineering-models/red-sun-lod.gif)
 
 I knew what **LODs** were, but once again it took me awhile to realise I was dealing with them. I was too much focused on thinking that it's an actual part of the model because I mistakenly fused it with a high detailed mesh. *I wonder if I would leave it like this if it wasn't for annoying z-fighting.*
 
@@ -476,7 +477,7 @@ I knew what **LODs** were, but once again it took me awhile to realise I was dea
 
 Figuring out which textures are required for a model was simple. They are specified at the beginning of the file. If you remember the **Resource extraction** section - I've noted that number `5` may indicate that the file is a texture, and such trait is also shared here. The way I've extracted textures from resource file also turned out to be correct: the index specified before number `5` is only related to texture files in an order they are packed.
 
-![Texture indexes](/img/cw-reverse-engineering-models/textures.png)
+![Texture indexes](./img/cw-reverse-engineering-models/textures.png)
 
 ### **Normals?**
 

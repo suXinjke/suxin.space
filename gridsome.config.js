@@ -1,16 +1,23 @@
 const unistMap = require( 'unist-util-map' )
-const visit = require( 'unist-util-visit' )
 
 const addLinksToImages = () => tree => unistMap( tree, node => {
-    if ( node.type !== 'image' ) {
-        return node
-    }
+    if ( node.type === 'html' && node.value.startsWith( '<img class="g-image' ) ) {
+        const noScriptTag = /<noscript>(.+)<\/noscript>/g.exec( node.value )[0]
+        const imageSrc = /src="([^"]+)"/g.exec( noScriptTag )[1]
 
-    return {
-        type: 'html',
-        value: `<a href="${node.url}" target="_blank" rel="noopener">
-            <img title="${node.alt}" alt="${node.alt}" src="${node.url}"/>
-        </a>`
+        return {
+            ...node,
+            value: `<a href="${imageSrc}" target="_blank" rel="noopener">${node.value}</a>`
+        }
+    } else if ( node.type === 'image' ) {
+        return {
+            type: 'html',
+            value: `<a href="${node.url}" target="_blank" rel="noopener">
+                <img title="${node.alt}" alt="${node.alt}" src="${node.url}"/>
+            </a>`
+        }
+    } else {
+        return node
     }
 } )
 
