@@ -1,5 +1,5 @@
 <template>
-    <div class="item" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+    <div class="item" @mouseover="onMouseEnter" @mouseleave="onMouseLeave" @touchstart="onMouseEnter" @touchend="onMouseLeave">
         <div :key="item.image" class="js-only item__image" v-lazy:background-image="item.image" :style="imageStyle">
             <font-awesome-icon class="item__image-icon" icon="stopwatch"/>
             <font-awesome-icon class="item__error-icon" icon="times"/>
