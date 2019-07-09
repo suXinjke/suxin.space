@@ -68,6 +68,7 @@ export default {
     margin: 0 auto;
 }
 .tweet-embed {
+    min-height: 460px;
     .twitter-tweet {
         margin: 0 auto;
     }

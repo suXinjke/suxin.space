@@ -103,7 +103,20 @@ module.exports = {
             externalLinksRel: [ 'noopener' ],
             plugins: [
                 '@gridsome/remark-prismjs',
-                addLinksToImages
+                addLinksToImages,
+                [ 'remark-autolink-headings', {
+                    behavior: 'append',
+                    linkProperties: {
+                        classname: 'anchor-link'
+                    },
+                    content: {
+                        type: 'element',
+                        tagName: 'span',
+                        children: [
+                            { type: 'text', value: '¶' }
+                        ]
+                    }
+                } ],
             ]
         }
     }

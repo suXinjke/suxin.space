@@ -55,6 +55,17 @@ pre, code {
     font-family: Consolas, monaco, monospace;
 }
 
+.anchor-link {
+    text-decoration: none;
+    color: $color-dark;
+    margin-left: 0.25rem;
+    visibility: hidden;
+
+    *:hover > & {
+        visibility: visible;
+    }
+}
+
 .page-enter-active {
     transition: opacity 0.2s;
 }
