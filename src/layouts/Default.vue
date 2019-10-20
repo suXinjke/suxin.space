@@ -32,7 +32,7 @@ body {
 }
 
 #app {
-    margin: 0 auto;
+    margin: 0 auto 4rem auto;
     padding: 0 16px;
 
     @include xl {
