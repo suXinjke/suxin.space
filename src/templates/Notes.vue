@@ -80,6 +80,9 @@ img {
     max-width: 100%;
 }
 table {
+    tr {
+        line-height: initial;
+    }
     td {
         vertical-align: top;
     }
