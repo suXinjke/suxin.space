@@ -2,7 +2,7 @@
     <div class="readable note">
         <h1><strong>{{ pageTitle }}</strong></h1>
         <h3>{{ pageDate }}</h3>
-        <div v-html="$page.notes.content"></div>
+        <div class="note__content" v-html="$page.notes.content"></div>
     </div>
 </Layout></template>
 
@@ -66,6 +66,11 @@ export default {
 .note {
     max-width: 48rem;
     margin: 0 auto;
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+    }
 }
 .tweet-embed {
     min-height: 460px;
@@ -74,10 +79,18 @@ export default {
     }
 }
 
-img {
-    display: block;
-    margin: 0 auto 1rem auto;
-    max-width: 100%;
+.image {
+    align-self: center;
+
+    img {
+        max-width: 100%;
+    }
+
+    &__title {
+        text-align: right;
+        margin: 0;
+        font-weight: initial;
+    }
 }
 table {
     tr {
