@@ -75,7 +75,7 @@ Could be a part of some stealth based mission, or maybe just looking for somethi
 
 Kinda resembles a satellite, since it's called sensor, could also be a part of stealth mission?
 
-![BDOOR](./img/cw3-oddities/sensor.jpg)
+![SENSOR](./img/cw3-oddities/sensor.jpg)
 
 ### **MINRO1**
 
