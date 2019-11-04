@@ -41,6 +41,10 @@ body {
 }
 
 .readable {
+    p, ul, ol {
+        margin: 0.5rem 0;
+    }
+
     p, li {
         line-height: 1.375em;
     }
