@@ -17,7 +17,8 @@ paths.forEach( path => {
     const input = path + '/*.{jpg,png}'
     const output = path.replace( /^static/, 'dist' )
 
-    imagemin( [ input ], output, {
+    imagemin( [ input ], {
+        destination: output,
         plugins: [
             imageminMozJpeg(),
             imageminPngquant()
@@ -25,6 +26,6 @@ paths.forEach( path => {
     } ).then( files => {
         return files
     } ).then( files => Promise.all(
-        files.map( file => fs.writeFile( file.path, file.data, () => {} ) )
+        files.map( file => fs.writeFile( file.destinationPath, file.data, () => {} ) )
     ) )
 } )
