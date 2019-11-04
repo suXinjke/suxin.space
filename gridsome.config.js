@@ -115,6 +115,7 @@ module.exports = {
         remark: {
             externalLinksRel: [ 'noopener' ],
             plugins: [
+                'gridsome-plugin-remark-youtube',
                 '@gridsome/remark-prismjs',
                 addLinksToImages,
                 [ 'remark-autolink-headings', {

@@ -17,6 +17,7 @@
     "@gridsome/transformer-remark": "^0.3.4",
     "gridsome": "^0.7.8",
     "gridsome-plugin-feed": "^1.0.2",
+    "gridsome-plugin-remark-youtube": "^1.0.1",
     "imagemin": "^7.0.0",
     "imagemin-gifsicle": "^6.0.1",
     "imagemin-mozjpeg": "^8.0.0",
