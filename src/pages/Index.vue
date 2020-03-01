@@ -33,22 +33,13 @@
         </section>
 
         <section class="home__section">
-            <HeaderText class="section-header" icon="car-crash" header="RICHARD BURNS RALLY" />
-            <div class="collection">
-                <div class="collection__item collection collection_sub">
-                    <ItemClickable class="collection__item" :item="items['rbr-cz-tourney-creator']"/>
-                    <ItemClickable class="collection__item" :item="items['rbr-cz-analysis']"/>
-                </div>
-                <ItemClickable class="collection__item" :item="items['rbr-delta-shakedown']"/>
-                <ItemClickable class="collection__item" :item="items['rbr-net']"/>
-            </div>
-        </section>
-
-        <section class="home__section">
-            <HeaderText class="section-header" icon="rocket" header="COLONY WARS RED SUN" />
+            <HeaderText class="section-header" icon="rocket" header="COLONY WARS" />
             <div class="collection">
                 <ItemClickable class="collection__item" :item="items['cw3-menu']"/>
-                <ItemClickable class="collection__item" :item="items['cw3-ripper']"/>
+                <div class="collection__item collection collection_sub">
+                    <ItemClickable class="collection__item" :item="items['cw3-ripper']"/>
+                    <ItemClickable class="collection__item" :item="items['cw2-ripper']"/>
+                </div>
                 <ItemClickable class="collection__item" :item="items['cw3-oddities']"/>
             </div>
         </section>
@@ -63,6 +54,10 @@
             <div class="collection">
                 <ItemClickable class="collection__item" :item="items['blender-goldsource']"/>
                 <ItemClickable class="collection__item" :item="items['barasite-eve']"/>
+            </div>
+            <div class="collection">
+                <ItemClickable class="collection__item" :item="items['rbr-cz-tourney-creator']"/>
+                <ItemClickable class="collection__item" :item="items['rbr-cz-analysis']"/>
             </div>
         </section>
 

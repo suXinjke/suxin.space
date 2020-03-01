@@ -8,13 +8,13 @@ image: /img/robin_1.jpg
 
 I'm a Russian developer focused on getting things done rather than wasting my time.
 
-With a wide variety of projects, I stopped obsessing over tools and best
-practices. Now finishing the product is all that matters and I'd rather
-make sure it's easy to do and maintain later.
+Due to huge variety of finished projects, I stopped obsessing over tools and best
+practices, instead making finished job and delivered product my first priority, while
+also making sure it's easy to do and maintain later.
 
-I always look for some value for me and other people in every project approached,
-be it solving a problem or a learning opportunity, and it better be done with utmost respect.
+I always look for some value for myself or other people in every project approached,
+be it solving a problem or a learning opportunity.
 
-Occasionally, I help people with development in [Discord](https://discord.gg/BQN6BYE).
+Occasionally, I help people with programming in [Discord](https://discord.gg/BQN6BYE).
 
-Aside from development, I'm also interested in video game design, travelling, racing and birds.
+Aside from programming and development, I'm also interested in video game design, travelling, racing and birds.

@@ -1,5 +1,5 @@
 ---
-title: CZ Better tourney creator
+title: RBR CZ Better tourney creator
 subtitle: USERSCRIPT
 icon: file-code
 image: /img/rbr-cz-tourney-creator.jpg

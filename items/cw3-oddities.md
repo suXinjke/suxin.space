@@ -1,6 +1,6 @@
 ---
-title: ODDITIES AND CUT CONTENT
-subtitle: NOTE
+title: RED SUN ODDITIES
+subtitle: CUTTING ROOM FLOOR
 icon: file
 link: /notes/cw3-oddities-and-cut-content/
 linkInternal: true

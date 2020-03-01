@@ -1,5 +1,5 @@
 ---
-title: CZ Track and car usage
+title: RBR CZ Track and car usage
 subtitle: ANALYSIS
 icon: chart-line
 image: /img/rbr_analysis.png
