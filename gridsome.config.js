@@ -114,6 +114,7 @@ module.exports = {
     transformers: {
         remark: {
             externalLinksRel: [ 'noopener' ],
+            imageQuality: 85,
             plugins: [
                 'gridsome-plugin-remark-youtube',
                 '@gridsome/remark-prismjs',
