@@ -64,4 +64,13 @@
         }
         margin: 0.125rem;
     }
+
+    &_stack {
+        flex-direction: column;
+    }
+
+    &_stack &__item {
+        flex-basis: 20rem;
+        margin: 0.25rem 0;
+    }
 }
