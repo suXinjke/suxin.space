@@ -27,6 +27,53 @@ const addLinksToImages = () => tree => unistMap( tree, node => {
     }
 } )
 
+let globalTabId = 0;
+let tabSections = []
+let populatingTabs = false
+const processTabs = () => tree => unistMap( tree, node => {
+    if ( node.type === 'html' && node.value.startsWith( '<div class="tabs">' ) ) {
+        populatingTabs = true;
+        return node;
+    } else if ( tabSections.length > 0 && node.type === 'html' && node.value.startsWith( '</div>' ) ) {
+        populatingTabs = false
+        globalTabId++
+        const tabContentsHTML = tabSections.map( elem => {
+            return `
+                <section class="tabs__content">
+                    ${elem.children[0].value}
+                </section>
+            `
+        } ).join( '\n' )
+        tabSections = []
+
+        return {
+            type: 'html',
+            value: `
+                    <div class="tabs__content-container">
+                        ${tabContentsHTML}
+                    </div>
+                </div>
+            `
+        }
+    } else if ( populatingTabs ) {
+        if ( node.type === 'paragraph' ) {
+            const tabId = `tab${globalTabId}_${tabSections.length}`
+            const tabName = node.children[0].alt
+            tabSections.push( node )
+
+            return {
+                type: 'html',
+                value: `
+                    <input type="radio" name="tabs_${globalTabId}" id="${tabId}"${tabSections.length === 1 ? 'checked' : ''}>
+                    <label for="${tabId}">${tabName}</label>
+                `
+            }
+        }
+    }
+
+    return node
+} )
+
 const siteUrl = 'https://suxin.space'
 
 module.exports = {
@@ -122,6 +169,7 @@ module.exports = {
                         ]
                     }
                 } ],
+                processTabs
             ]
         }
     }

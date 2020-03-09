@@ -152,4 +152,46 @@ table {
         vertical-align: top;
     }
 }
+
+.tabs {
+    & > input[type="radio"] {
+        display: none;
+    }
+
+    & > label {
+        position: relative;
+        display: inline-block;
+        padding: 1rem;
+        cursor: pointer;
+
+        font-weight: 900;
+        font-size: 1.3em;
+    }
+
+    & > input:checked + label {
+        background-color: $color-primary;
+    }
+
+    &__content {
+        padding: 0.5rem 1rem;
+    }
+
+    &__content {
+        display: none;
+    }
+
+    & > input:first-child:checked ~   &__content-container > &__content:first-child,
+    & > input:nth-child(3):checked ~  &__content-container > &__content:nth-child(2),
+    & > input:nth-child(5):checked ~  &__content-container > &__content:nth-child(3),
+    & > input:nth-child(7):checked ~  &__content-container > &__content:nth-child(4),
+    & > input:nth-child(9):checked ~  &__content-container > &__content:nth-child(5),
+    & > input:nth-child(11):checked ~ &__content-container > &__content:nth-child(6) {
+        display: block;
+    }
+
+    & .image__title {
+        display: none;
+    }
+}
+
 </style>
