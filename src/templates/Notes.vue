@@ -129,6 +129,7 @@ export default {
 }
 
 .image {
+    text-align: center;
     align-self: center;
 
     img {
@@ -151,6 +152,10 @@ table {
     td {
         vertical-align: top;
     }
+}
+
+.language-break-space {
+    white-space: pre-line !important;
 }
 
 .tabs {

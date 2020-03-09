@@ -26,6 +26,10 @@
             flex: 1;
             height: 24rem;
 
+            &_bigger {
+                height: 32rem;
+            }
+
             display: flex;
             flex-direction: column;
 

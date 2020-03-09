@@ -35,12 +35,15 @@
         <section class="home__section">
             <HeaderText class="section-header" icon="rocket" header="COLONY WARS" />
             <div class="collection">
-                <ItemClickable class="collection__item" :item="items['cw3-menu']"/>
-                <div class="collection__item collection collection_sub">
+                <ItemClickable class="collection__item collection__item_bigger" :item="items['cw3-menu']"/>
+                <div class="collection__item collection__item_bigger collection collection_sub">
                     <ItemClickable class="collection__item" :item="items['cw3-ripper']"/>
                     <ItemClickable class="collection__item" :item="items['cw2-ripper']"/>
                 </div>
-                <ItemClickable class="collection__item" :item="items['cw3-oddities']"/>
+                <div class="collection__item collection__item_bigger  collection collection_sub">
+                    <ItemClickable class="collection__item" :item="items['cw3-oddities']"/>
+                    <ItemClickable class="collection__item" :item="items['cw2-oddities']"/>
+                </div>
             </div>
         </section>
 

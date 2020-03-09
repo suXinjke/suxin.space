@@ -10,6 +10,9 @@ showcase:
     - image: /img/cw-reverse-engineering-models/red-sun-ships.jpg
       imagePos: 30% 0%
     - image: /img/cw-reverse-engineering-models/faulty-offsets.png
+seeAlso:
+    - cw-vengeance-reverse-engineering-models
+    - cw3-oddities-and-cut-content
 ---
 In this note I want to share my experience with ripping 3D models from
 one of my most favorite Playstation games: **Colony Wars: Red Sun**,

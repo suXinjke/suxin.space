@@ -10,6 +10,7 @@ showcase:
     - image: /img/cw-vengeance-reverse-engineering-models/hex2.jpg
 seeAlso:
     - cw-reverse-engineering-models
+    - cw2-oddities-and-cut-content
 ---
 This note is the sequel to [Reverse engineering Colony Wars Red Sun models](/notes/cw-reverse-engineering-models).
 After I finished my work with **Red Sun**, I knew I will eventually get to the previous game in the series:

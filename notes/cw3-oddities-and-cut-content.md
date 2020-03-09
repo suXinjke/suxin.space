@@ -3,6 +3,9 @@ title: 'Colony Wars Red Sun oddities and cut content'
 date: '2019-06-01'
 description: Easter egg torpedo, unused models and amusing text found in extracted files of Colony Wars Red Sun, a Playstation space dogfighting game.
 image: /img/cw3-oddities/bds0.jpg
+seeAlso:
+    - cw2-oddities-and-cut-content
+    - cw-reverse-engineering-models
 ---
 
 ## **BDS 9000**
