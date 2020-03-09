@@ -122,7 +122,7 @@ Interestingly, we can note that section 0 and 1 have the same offset as section 
 
 Here's a highlight of one of the faces from the **section 3**, and **meta table** for each **face section**, in which I described all required info:
 
-![Face section meta](./img/cw-vengeance-reverse-engineering-models/nhex-face-example.png)
+![Face example](./img/cw-vengeance-reverse-engineering-models/nhex-face-example.png)
 
 ```js
 const face_section_meta = {
