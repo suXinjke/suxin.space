@@ -52,10 +52,11 @@
             <div class="collection">
                 <ItemClickable class="collection__item" :item="items['about-this-website']"/>
                 <ItemClickable class="collection__item" :item="items['rss']"/>
-                <ItemClickable class="collection__item" :item="items['secretary-bird']"/>
+                <ItemClickable class="collection__item" :item="items['chirpinator']"/>
             </div>
             <div class="collection">
                 <ItemClickable class="collection__item" :item="items['blender-goldsource']"/>
+                <ItemClickable class="collection__item" :item="items['secretary-bird']"/>
                 <ItemClickable class="collection__item" :item="items['barasite-eve']"/>
             </div>
             <div class="collection">
