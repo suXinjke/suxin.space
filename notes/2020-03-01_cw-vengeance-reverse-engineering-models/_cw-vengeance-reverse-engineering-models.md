@@ -27,7 +27,7 @@ I will mostly focus on differences compared to **Red Sun** rather than how I app
 Once again we're dealing with **GAME.RSC** file, which includes all the **resources**
 used in the game: mission data, models, player's ship stats, ground terrain data, demo data and other things.
 
-![Colony Wars Vengeance contents](./img/cw-vengeance-reverse-engineering-models/game-rsc.png)
+![Colony Wars Vengeance contents](./game-rsc.png)
 
 Opening the file in [**HxD** hex editor](https://mh-nexus.de/en/hxd/) immediately shows the list of pairs,
 consisting of <span style="color: blue;">file name</span> and <span style="color: green;">it's location in the **GAME.RSC**</span>. The 4 bytes at the beginning turned out to be the <span style="color: orange;">amount of files</span>.
@@ -35,7 +35,7 @@ consisting of <span style="color: blue;">file name</span> and <span style="color
 Compared to **Red Sun**, there are no directories whatsoever, [making the extraction of files trivial](https://github.com/suXinjke/VengeanceRipper/blob/master/game_rsc_extract.js).
 File sizes are still not included, so I have to calculate them myself based on file offsets, *I wonder if it also happens at runtime when game is loading?*
 
-![GAME.RSC contents](./img/cw-vengeance-reverse-engineering-models/game-rsc-contents.png)
+![GAME.RSC contents](./game-rsc-contents.png)
 
 Here's a rundown on extracted files:
 * **BND** files - 3D model files that I'm focusing on, what **BND** stands for - remains a mystery.
@@ -68,7 +68,7 @@ Some other notable sections were:
 * **LITE**: ???
 * **GRID**: ???
 
-![NHEX.BND contents](./img/cw-vengeance-reverse-engineering-models/nhex-contents.png)
+![NHEX.BND contents](./nhex-contents.png)
 
 Therefore it's basically a resource file within another resource file, I have to parse several **TMDS** and **TIMS**, the latter was already done in **Red Sun** and worked alright here, but **TMDS** are quite different compared to whatever model format that was in **Red Sun**.
 
@@ -103,11 +103,11 @@ module.exports = {
     // ...
 ```
 
-![Hex - Level of Detail 1](./img/cw-vengeance-reverse-engineering-models/hex-lod-1.png)
+![Hex - Level of Detail 1](./hex-lod-1.png)
 
-![Hex - Level of Detail 2](./img/cw-vengeance-reverse-engineering-models/hex-lod-2.png)
+![Hex - Level of Detail 2](./hex-lod-2.png)
 
-![Hex - Level of Detail 3](./img/cw-vengeance-reverse-engineering-models/hex-lod-3.png)
+![Hex - Level of Detail 3](./hex-lod-3.png)
 
 
 
@@ -117,13 +117,13 @@ Faces connect vertexes together, faces can have three or four vertexes, making t
 
 **Vengeance** had it easier for me. Every **TMD** portion of the model had what I called *face section*, with index of the section determining the type of the face. From every section I've got the info on <span style="color: orange;">amount of faces</span> and the <span style="color: green;">location of the first face in the file</span>.
 
-![Face section meta](./img/cw-vengeance-reverse-engineering-models/nhex-faces.png)
+![Face section meta](./nhex-faces.png)
 
 Interestingly, we can note that section 0 and 1 have the same offset as section 2. You may also notice some two other offsets afterwards, I never really encountered anything meaningful in sections past 3.
 
 Here's a highlight of one of the faces from the **section 3**, and **meta table** for each **face section**, in which I described all required info:
 
-![Face example](./img/cw-vengeance-reverse-engineering-models/nhex-face-example.png)
+![Face example](./nhex-face-example.png)
 
 ```js
 const face_section_meta = {
@@ -146,27 +146,27 @@ const vertexes = [
 ]
 ```
 
-![Incorrect vertex order for faces](./img/cw-vengeance-reverse-engineering-models/swiss-cheese.png)
+![Incorrect vertex order for faces](./swiss-cheese.png)
 
 And here's some more pictures that demonstrate initial failed attempts to parse the model:
 
-![Wrong faces arrangement on Hex](./img/cw-vengeance-reverse-engineering-models/hex-first-attempt.png)
+![Wrong faces arrangement on Hex](./hex-first-attempt.png)
 
-![Wrong faces arrangement on Hex 2](./img/cw-vengeance-reverse-engineering-models/hex-first-attempt2.png)
+![Wrong faces arrangement on Hex 2](./hex-first-attempt2.png)
 
-![Borked UV on Hex](./img/cw-vengeance-reverse-engineering-models/hex-texture.png)
+![Borked UV on Hex](./hex-texture.png)
 
-![Missing faces on Wraith](./img/cw-vengeance-reverse-engineering-models/bad-wraith.png)
+![Missing faces on Wraith](./bad-wraith.png)
 
 ### **Bonus 3D printed legacy**
 
 Around some time before **Red Sun** models were ripped, I was contacted by [**SoxF0x**](https://twitter.com/SoxF0x/) who mentioned taking the first ever rip of **Hex** ship, 3D printing the model, printing the textures and combining it all together into very solid looking real-life figurine.
 
-![Hex 3D print with textures applied](./img/cw-vengeance-reverse-engineering-models/cw-print-1.jpg)
+![Hex 3D print with textures applied](./cw-print-1.jpg)
 
 I was very impressed and got excited because I was already working on other **Red Sun** models and wondered if I could also see them printed. As our conversation on models and printing went on, I sent an initial batch of **Red Sun rips**, which resulted in these a half-year later:
 
-![Red Sun 3D prints with textures](./img/cw-vengeance-reverse-engineering-models/cw-print-2.jpg)
+![Red Sun 3D prints with textures](./cw-print-2.jpg)
 
 <div class="video">
     <video src="/img/cw-vengeance-reverse-engineering-models/cw-print-3.mp4" controls></video>
@@ -176,9 +176,9 @@ After finishing the **Vengeance** batch and sharing it with **SoxF0x**, I consid
 
 So far I consider these as an unexpected reward for effort, and then as a way for few fans to express their love for **Colony Wars** series, these must be one-of-a-kind right now. I also wonder if the models could serve as a good reference for remakes or reimagined designs.
 
-![Colony Wars 3D prints](./img/cw-vengeance-reverse-engineering-models/cw-print-4.jpg)
+![Colony Wars 3D prints](./cw-print-4.jpg)
 
-![Colony Wars 3D prints with textures](./img/cw-vengeance-reverse-engineering-models/cw-print-5.jpg)
+![Colony Wars 3D prints with textures](./cw-print-5.jpg)
 
 There's still one game left: the original **Colony Wars**, I did look into it quickly, both **GAME.RSC** and **models** are quite similar but not enough that I could easily rip them in the same manner as I did with **Vengeance**. I will get to it when I feel like it, and do a similar writeup on differences.
 

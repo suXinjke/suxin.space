@@ -21,49 +21,49 @@ Note that all ships with **L** and **T** skins have a portion of their mesh with
 
 <div class="tabs">
 
-![BHEX](./img/cw2-oddities/BHEX_0_large.png)
+![BHEX](./BHEX_0_large.png)
 
-![LHEX](./img/cw2-oddities/LHEX_0_large.png)
+![LHEX](./LHEX_0_large.png)
 
-![THEX](./img/cw2-oddities/THEX_0_large.png)
+![THEX](./THEX_0_large.png)
 
-![Original Hex](./img/cw2-oddities/NHEX_0_large.png)
-
-</div>
-
-<div class="tabs">
-
-![BWRAITH](./img/cw2-oddities/BWRAITH_0_LARGE.png)
-
-![LWRAITH](./img/cw2-oddities/LWRAITH_0_large.png)
-
-![TWRAITH](./img/cw2-oddities/TWRAITH_0_large.png)
-
-![Original Wraith](./img/cw2-oddities/NWRAITH_0_large.png)
+![Original Hex](./NHEX_0_large.png)
 
 </div>
 
 <div class="tabs">
 
-![BDIABLO](./img/cw2-oddities/BDIABLO_0_LARGE.png)
+![BWRAITH](./BWRAITH_0_LARGE.png)
 
-![LDIABLO](./img/cw2-oddities/LDIABLO_0_large.png)
+![LWRAITH](./LWRAITH_0_large.png)
 
-![TDIABLO](./img/cw2-oddities/TDIABLO_0_large.png)
+![TWRAITH](./TWRAITH_0_large.png)
 
-![Original Diablo](./img/cw2-oddities/NDIABLO_0_large.png)
+![Original Wraith](./NWRAITH_0_large.png)
 
 </div>
 
 <div class="tabs">
 
-![BVOODOO](./img/cw2-oddities/BVOODOO_0_LARGE.png)
+![BDIABLO](./BDIABLO_0_LARGE.png)
 
-![LVOODOO](./img/cw2-oddities/LVOODOO_0_large.png)
+![LDIABLO](./LDIABLO_0_large.png)
 
-![TVOODOO](./img/cw2-oddities/TVOODOO_0_large.png)
+![TDIABLO](./TDIABLO_0_large.png)
 
-![Original Voodoo](./img/cw2-oddities/NVOODOO_0_large.png)
+![Original Diablo](./NDIABLO_0_large.png)
+
+</div>
+
+<div class="tabs">
+
+![BVOODOO](./BVOODOO_0_LARGE.png)
+
+![LVOODOO](./LVOODOO_0_large.png)
+
+![TVOODOO](./TVOODOO_0_large.png)
+
+![Original Voodoo](./NVOODOO_0_large.png)
 
 </div>
 
@@ -75,25 +75,25 @@ The model looks like it's missing a part, I'm not sure if it's unfinished or a m
 
 <div class="tabs">
 
-![AFLEET2](./img/cw2-oddities/AFLEET2_0_large.png)
+![AFLEET2](./AFLEET2_0_large.png)
 
-![AFLEET1 (Original)](./img/cw2-oddities/AFLEET1_0_large.png)
+![AFLEET1 (Original)](./AFLEET1_0_large.png)
 
-![AACE](./img/cw2-oddities/AACE_0_large.png)
+![AACE](./AACE_0_large.png)
 
 </div>
 
 ## **MEDIC**
 
-![Yep, that's me, you're probably wondering how I ended up in this game](./img/cw2-oddities/LMEDIC_guy.png)
+![Yep, that's me, you're probably wondering how I ended up in this game](./LMEDIC_guy.png)
 
 Some unused capital ship, which includes a peculiar face of person I have no idea about. **LMEDIC** and **NMEDIC** file names suggest this ship could probably assist and repair the others. Has both **League** and **Navy** skins.
 
 <div class="tabs">
 
-![LMEDIC](./img/cw2-oddities/LMEDIC_0_LARGE.png)
+![LMEDIC](./LMEDIC_0_LARGE.png)
 
-![NMEDIC](./img/cw2-oddities/NMEDIC_0_large.png)
+![NMEDIC](./NMEDIC_0_large.png)
 
 </div>
 
@@ -101,13 +101,13 @@ Some unused capital ship, which includes a peculiar face of person I have no ide
 
 This one is not used anywhere and doesn't seem to be leftover from original **Colony Wars** either. There are **LECO** and **NECO** files, suggesting both **League** and **Navy** could have it, and yet they look exactly same, suggesting **ECO** was not finished.
 
-![LECO.BND / NECO.BND](./img/cw2-oddities/LECO_0_LARGE.png)
+![LECO.BND / NECO.BND](./LECO_0_LARGE.png)
 
 ## **LBCARR**
 
 This huge **League carrier** also doesn't seem to be used anywhere.
 
-![LBCARR.BND](./img/cw2-oddities/LBCARR_0_large.png)
+![LBCARR.BND](./LBCARR_0_large.png)
 
 ## **Loading screens**
 
@@ -115,9 +115,9 @@ The original loading screen always blew my mind when I was a kid. Nowadays I've 
 
 <div class="tabs">
 
-![Loading screen tunnel](./img/cw2-oddities/tunnel.png)
+![Loading screen tunnel](./tunnel.png)
 
-![In-game](./img/cw2-oddities/loading-tunnel.jpg)
+![In-game](./loading-tunnel.jpg)
 
 </div>
 
@@ -125,9 +125,9 @@ In case of jumpgate loading screen, it's just a huge cylinder. I guess it's also
 
 <div class="tabs">
 
-![Loading screen warp tunnel](./img/cw2-oddities/tunnel_warp.png)
+![Loading screen warp tunnel](./tunnel_warp.png)
 
-![In-game](./img/cw2-oddities/loading-warp.jpg)
+![In-game](./loading-warp.jpg)
 
 </div>
 
@@ -137,7 +137,7 @@ This might be far fetched, but executable file **SLUS_007.22** on the disc has s
 
 If you want to see for yourself, just CTRL+F **GAME.RSC** string, it's located below the logo, followed by huge amount of nulls.
 
-![Navy logo on SLUS_007.22?](./img/cw2-oddities/navy.png)
+![Navy logo on SLUS_007.22?](./navy.png)
 
 ## **Text findings**
 
@@ -294,7 +294,7 @@ Several dialogue and corresponding subtitles were apprarently cut and commented 
 
 Apparently a file with game related code includes *hello* to someone's mom
 
-![MUM](./img/cw2-oddities/mum.png)
+![MUM](./mum.png)
 
 ## **Additional info**
 

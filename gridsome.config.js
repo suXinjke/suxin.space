@@ -91,7 +91,7 @@ module.exports = {
         {
             use: '@gridsome/source-filesystem',
             options: {
-                path: 'notes/*.md',
+                path: 'notes/**/*.md',
                 typeName: 'Notes'
             }
         },
@@ -172,5 +172,9 @@ module.exports = {
                 processTabs
             ]
         }
+    },
+
+    templates: {
+        Notes: (node) => `/notes/${node.fileInfo.name.replace( /^_+/g, '' )}`
     }
 }

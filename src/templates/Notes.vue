@@ -29,9 +29,7 @@ query Note ($path: String!) {
     allNotes {
         edges {
             node {
-                fileInfo {
-                    name
-                }
+                path
                 title
                 image
                 showcase {
@@ -76,7 +74,7 @@ export default {
             const allNotes = this.$page.allNotes.edges;
 
             const result = notes.seeAlso.map( seeAlsoNote => {
-                const note = allNotes.find( ( { node: note } ) => note.fileInfo.name === seeAlsoNote )
+                const note = allNotes.find( ( { node: note } ) => note.path.includes( seeAlsoNote ) )
                 if ( !note ) {
                     throw new Error( `No seeAlsoNote called ${seeAlsoNote}` )
                 }
@@ -84,7 +82,7 @@ export default {
 
                 return {
                     ...item,
-                    link: `/notes/${item.fileInfo.name}`,
+                    link: item.path,
                     linkInternal: true
                 }
             } )

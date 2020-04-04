@@ -17,7 +17,7 @@ It's just this this old video of Donkey and Shrek fighting
 
 But it wasn't as easy as you might think, so I decided to do this write-up.
 
-![Picture it! The most evil character of Ace Combat](./img/making-of-solo-sheet-torres/Matias_Torres_AC7_Image.jpg)
+![Picture it! The most evil character of Ace Combat](./Matias_Torres_AC7_Image.jpg)
 
 ## **Mixing nightmare**
 
@@ -79,9 +79,9 @@ I still want to believe there's some variable that controls the music volume in 
 
 Here's something you can easily do with **Cheat Engine** to make funny pictures. Search **Pixy** as a string and you'll get plenty of them, now you can literally change these to whatever meaningful text you want. It's very simple to do, but let's admit that without this the video wouldn't be as funny or immersive.
 
-![Give Aces the names of your friends to shoot them down when angry](./img/making-of-solo-sheet-torres/torres_iff.jpg)
+![Give Aces the names of your friends to shoot them down when angry](./torres_iff.jpg)
 
-![All names of Aces are just stored in memory, above all PIXY there were some WIZARD and GAULT](./img/making-of-solo-sheet-torres/shrek.jpg)
+![All names of Aces are just stored in memory, above all PIXY there were some WIZARD and GAULT](./shrek.jpg)
 
 ## **Splash screen**
 
@@ -91,7 +91,7 @@ The splash screens for missions are apparently just pictures, because you can't 
 
 If one were to nitpick, you can notice very slight gradient on the original text from left to right. I decided not to worry about it because most people won't notice.
 
-![The drastic difference that blur brings](./img/making-of-solo-sheet-torres/splash.gif)
+![The drastic difference that blur brings](./splash.gif)
 
 ## **Subtitles?**
 
@@ -114,6 +114,6 @@ With all source material ready, it's only a matter of cutting and moving things 
 
 While this small project is not really complex, at least it's something I finally had some passion to work on after several months. Doing this write-up is no exception, as I didn't write anything since the last summer.<br/> I think by reading this, some people could get a thing or two they could find useful for their own projects, *tell me if you do!*
 
-![Here's the end result](./img/making-of-solo-sheet-torres/premier.png)
+![Here's the end result](./premier.png)
 
 `youtube:https://www.youtube.com/watch?v=l4ORTB0yEUU`

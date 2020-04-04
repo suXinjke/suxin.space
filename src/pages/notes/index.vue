@@ -9,9 +9,7 @@ query Home {
     allNotes {
         edges {
             node {
-                fileInfo {
-                    name
-                }
+                path
                 title
                 date
                 image
@@ -42,7 +40,7 @@ export default {
 
                 return {
                     ...item,
-                    link: `/notes/${item.fileInfo.name}`,
+                    link: item.path,
                     linkInternal: true,
                     subtitle: date.toDateString().replace( /^[^\s]+\s/, '' ).toUpperCase(),
                     icon: item.icon || 'file'

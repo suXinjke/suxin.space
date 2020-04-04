@@ -17,11 +17,11 @@ Weirdly enough, I consider playing **Hitman** the first thing that led to creati
 While today you can't impress anyone by using tiles, the way they were arranged and presented felt very straightforward and on-point.
 Somehow they made me think that the game has a lot to offer: *what's this? and what is that?* I keep occasionally checking these menus over and over again even after I moved onto **Hitman 2**.
 
-![Hitman Menu](./img/about-this-website/hitman_menu.jpg)
+![Hitman Menu](./hitman_menu.jpg)
 
-![Hitman Menu](./img/about-this-website/hitman_menu2.jpg)
+![Hitman Menu](./hitman_menu2.jpg)
 
-![Hitman Menu](./img/about-this-website/hitman_menu3.jpg)
+![Hitman Menu](./hitman_menu3.jpg)
 
 I was job hunting during this period, and I realised that despite understanding how fancy HTML / CSS work, I had nothing to prove it: my past projects were more focused on ***do*** rather than ***see***, the latter dominating every website which is supposed to present you, your projects or business.
 Compared to these, my approach to design always seemed bland, and I don't even care minimalism, it just always felt right to go that way.
@@ -311,6 +311,6 @@ All of this on entirely different topics, it doesn't have to stay 100% technical
 
 ### Bonus weird early layout tests
 
-![Layout test](./img/about-this-website/wip_1.jpg)
+![Layout test](./wip_1.jpg)
 
-![Layout test](./img/about-this-website/wip_2.jpg)
+![Layout test](./wip_2.jpg)

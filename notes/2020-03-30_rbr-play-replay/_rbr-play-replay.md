@@ -17,7 +17,7 @@ Since then I still didn't start working on this, one of the reasons was the fact
 
 So this is my problem: **I have to find the function that the game calls to load and begin replay playback**, so I can call it myself any time in my C++ plugin code. I already had reverse engineering experience, [but it was limited to parsing 3D model data](/notes/cw-reverse-engineering-models), this is the first time I had legit game with legit need to use debugger and disassembler, something that is very out of my comfort zone.
 
-![This guy on bottom has secret pocket with Red Bull can inside if you wonder](./img/rbr-play-replay/replay.jpg)
+![This guy on bottom has secret pocket with Red Bull can inside if you wonder](./replay.jpg)
 
 ## **Breakpoint targeting**
 
@@ -25,7 +25,7 @@ Before I get to the debugging part, I first have to figure out where I want to d
 
 This leads me to the only operation I've been looking for, and most importantly: the call stack which ends with the in-game memory address where the function was called from: `0x452C29`. *This is where I will setup a breakpoint*.
 
-![Call stack for the ReadFile operation, pointing at the place where it was called from](./img/rbr-play-replay/read_file.png)
+![Call stack for the ReadFile operation, pointing at the place where it was called from](./read_file.png)
 
 ## **Debugging**
 
@@ -35,13 +35,13 @@ If you also decide to try out **x64dbg**, I highly recommend you check out it's 
 
 Anyway, I've attached to the **RichardBurnsRally_SSE.exe** process, went to the `0x452C29` address I've noted before and set the breakpoint there. After I attempted to select my replay from in-game menu, the debugger paused the execution right where I expected.
 
-![x64dbg, but it's actually x32dbg, click on the picture if it's too small](./img/rbr-play-replay/first_breakpoint.png)
+![x64dbg, but it's actually x32dbg, click on the picture if it's too small](./first_breakpoint.png)
 
 I can certainly see the call to **ReadFile** was just made, like it was also seen in **Process Monitor**. After that I look at the stack on bottom right, which has the mention of replay file name - just what I need! *If I only I knew where it all began.* Checking bottom stack contents from previous function calls reveals, I assume, several **stack frames**. The highlighted replay file name on the screenshot below is the first mention of it at the bottom of stack, therefore I assume that function at the address of `0x4999B0`, which I labeled as **PlayReplay?** on the screenshot, is what I should focus on.
 
 Here goes my first tip when it comes to solving problems like this, and many others will probably tell you the same: **label everything of your interest**, especially if you stumble upon static stuff like constant addresses. Little things may not make any sense right now, but you may encounter them again later on, which will assemble into a bigger picture.
 
-![Stack contents](./img/rbr-play-replay/stack.png)
+![Stack contents](./stack.png)
 
 Being familiar with the concept of stack frames, I notice what seems to look like a function with signature of
 ```cpp
@@ -50,7 +50,7 @@ void PlayReplay?( const char *replayName, void *whatever, void *whatever2, size_
 
 I did notice that 4th argument is replay file size after I tried to load several other replay files. The whatever pointers I marked on 2nd and 3rd arguments turned out to be not really interesting, they point to some memory section and numbers 54 (0x36) and 4 are written there. I didn't figure out what they're for so I will keep thinking *whatever* of them for now.
 
-![Weird assignments](./img/rbr-play-replay/weird_assignments.png)
+![Weird assignments](./weird_assignments.png)
 
 ## **Calling**
 
