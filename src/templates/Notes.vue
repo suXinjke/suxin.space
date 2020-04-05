@@ -143,6 +143,9 @@ export default {
 .video {
     text-align: center;
 }
+.audio audio {
+    width: 100%;
+}
 table {
     tr {
         line-height: initial;
@@ -195,6 +198,27 @@ table {
     & .image__title {
         display: none;
     }
+}
+
+// @keyframes item__appear {
+//     0% { height: 16px }
+//     0% { height: 16px }
+//     0% { height: 16px }
+//     to { opacity: 1; }
+// }
+
+* {
+    &:hover > .tiny-frog  {
+        width: 16px;
+        transition: width 1s ease-in-out;
+    }
+}
+
+.tiny-frog {
+    content: url('/frog.svg');
+    width: 0;
+    margin: -2px 0;
+    transition: width 1s ease-in-out;
 }
 
 </style>
