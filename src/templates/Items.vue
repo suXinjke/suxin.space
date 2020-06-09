@@ -2,12 +2,19 @@
     <div class="item-page">
         <div v-if="itemData.image" class="item-page__image" :style="imageStyle"></div>
         <div class="item-page__content">
-            <HeaderText
-                :header="itemData.title"
-                :header-secondary="itemData.subtitle"
-                :icon="itemData.icon"
-                :iconStyle="itemData.iconStyle"
-            />
+            <div class="item-page__content-header">
+                <HeaderText
+                    :header="itemData.title"
+                    :header-secondary="itemData.subtitle"
+                    :icon="itemData.icon"
+                    :iconStyle="itemData.iconStyle"
+                />
+                <HeaderText
+                    v-if="itemData.status"
+                    status
+                    :header="itemData.status"
+                />
+            </div>
             <div v-html="itemData.content"></div>
         </div>
     </div>
@@ -21,6 +28,8 @@ query Item ($path: String!) {
         image
         icon
         iconStyle
+        status
+        statusIcon
         showcase {
             image
             imagePos
@@ -92,6 +101,12 @@ export default {
 
     &__content {
         flex: 3;
+    }
+
+    &__content-header {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
     }
 }
 </style>

@@ -8,6 +8,12 @@
                 :icon="firstItemAttributes.icon"
                 :iconStyle="firstItemAttributes.iconStyle"
             />
+            <HeaderText
+                v-if="firstItemAttributes.status"
+                status
+                class="item-description__status"
+                :header="firstItemAttributes.status"
+            />
             <div class="item-description__close-button" @click="$emit( 'close' )">
                 <font-awesome-icon icon="times"/>
             </div>
@@ -59,15 +65,18 @@ export default {
 
     &__header {
         display: flex;
+        color: $color-light;
+        background-color: $color-secondary;
     }
 
     &__header-text {
         flex: 1;
         min-width: 0;
-        padding: 0.5rem 0.75rem;
+        margin: 0.5rem 0.75rem;
+    }
 
-        color: $color-light;
-        background-color: $color-secondary;
+    &__status {
+        margin: 0 1rem 0 0;
     }
 
     &__close-button {
@@ -77,6 +86,7 @@ export default {
         justify-content: center;
         font-size: 2em;
         padding: 0 0.5em;
+        color: $color-dark;
         background-color: $color-primary;
     }
 

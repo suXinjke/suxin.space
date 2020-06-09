@@ -3,9 +3,25 @@
         <div :key="item.image" class="js-only item__image" v-lazy:background-image="item.image" :style="imageStyle">
             <font-awesome-icon class="item__image-icon" icon="stopwatch"/>
             <font-awesome-icon class="item__error-icon" icon="times"/>
+            <HeaderText
+                v-if="item.status"
+                class="item__status"
+                status
+                :header="item.status"
+                :icon="item.statusIcon"
+                :iconStyle="item.iconStyle"
+            />
         </div>
         <noscript class="item__noscript" inline-template>
             <div class="item__image" :style="imageStyle + `background-image: url('${item.image}')`">
+                <HeaderText
+                    v-if="item.status"
+                    class="item__status"
+                    status
+                    :header="item.status"
+                    :icon="item.statusIcon"
+                    :iconStyle="item.iconStyle"
+                />
             </div>
         </noscript>
         <div class="item__header">
@@ -104,6 +120,18 @@ export default {
         &[lazy=error] .item__error-icon {
             display: initial;
         }
+
+        &[lazy=loading] .item__status,
+        &[lazy=error] .item__status {
+            display: none;
+        }
+    }
+
+    &__status {
+        color: $color-light;
+        padding: 0.75rem;
+        text-shadow: 0px 1px 4px rgb(0, 0, 0);
+        margin: auto auto 0 0;
     }
 
     &__image-icon,

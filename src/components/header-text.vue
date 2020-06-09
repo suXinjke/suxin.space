@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ 'header-text': true, 'header-text_marquee': marquee }" >
+    <div :class="{ 'header-text': true, 'header-text_marquee': marquee, 'header-text_status': status }" >
         <div class="header-text__icon-container" v-if="icon">
             <font-awesome-icon class="header-text__icon" :icon="[ iconStyle || 'fas', icon ]"/>
         </div>
@@ -11,6 +11,8 @@
 </template>
 
 <style lang="scss">
+@import '@/assets/util.scss';
+
 .header-text {
     display: flex;
     align-items: center;
@@ -64,6 +66,18 @@
     &_marquee &__primary {
         text-overflow: initial;
     }
+
+    &_status &__icon {
+        color: $color-dark;
+    }
+
+    &_status &__icon-container {
+        background-color: $color-light;
+    }
+
+    &_status &__primary {
+        font-size: 1.8em;
+    }
 }
 </style>
 
@@ -77,7 +91,8 @@ export default {
         iconStyle: String,
         header: String,
         headerSecondary: String,
-        marquee: Boolean
+        marquee: Boolean,
+        status: Boolean,
     },
     computed: {
         title: function() {

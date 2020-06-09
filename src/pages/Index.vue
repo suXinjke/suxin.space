@@ -90,6 +90,8 @@ query Home {
                 subtitle
                 icon
                 iconStyle
+                status
+                statusIcon
                 image
                 imagePos
                 link

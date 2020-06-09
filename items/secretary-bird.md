@@ -2,16 +2,21 @@
 title: SECRETARY BIRD
 subtitle: COMMUNITY BOT
 icon: file-code
-image: /img/secretary_bird.jpg
+status: Retired
+statusIcon: times
+image: /img/secretary_bird_retired.jpg
 ---
-Initially made to moderate and ban for disgusting chat messages,
-**Secretary bird** was then transfered to a certain **Discord community** I'm no
+Originally created to moderate and ban for disgusting chat messages,
+**Secretary bird** was then transferred to a certain **Discord community** I'm no
 longer a part of.
 
-Nowadays, this bird bot keeps answering the dumbest questions, can
-announce **Twitch streams** and is also available to use **Twitter**.
+This bird bot used to answer the dumbest questions, announced
+**Twitch streams** and was also available to use **Twitter**.
 
 By interacting with the bot we've found out that it's rather angry
 and loves **pepsi** and **kit-kat** alot.
 
-Nothing impressive, but always got the job done, [source code here](https://github.com/suXinjke/SecretaryBird).
+On **MAY 12th** bot was shutdown due to it's services no longer being required
+and hosting expenses not worth it.
+
+Nothing impressive, but it always got the job done, [source code here](https://github.com/suXinjke/SecretaryBird).
