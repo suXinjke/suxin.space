@@ -1,0 +1,167 @@
+@custom-media --sm (min-width: 576px);
+@custom-media --lg (min-width: 992px);
+
+main section {
+  margin-bottom: 4rem;
+}
+
+.section-header {
+  margin-bottom: 0.5rem;
+}
+
+:root {
+  --animation-time: 0.1s;
+}
+
+@keyframes modal__appear {
+  from {
+    background-color: rgba(30, 30, 30, 0);
+  }
+  to {
+    background-color: rgba(30, 30, 30, 0.9);
+  }
+}
+@keyframes modal__leave {
+  from {
+    background-color: rgba(30, 30, 30, 0.9);
+  }
+  to {
+    background-color: rgba(30, 30, 30, 0);
+  }
+}
+@keyframes modal__content-appear {
+  from {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes modal__content-leave {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(30, 30, 30, 0.9);
+  z-index: 22;
+
+  &_active {
+    display: flex;
+    animation: modal__appear var(--animation-time);
+  }
+
+  &_leaving {
+    animation: modal__leave var(--animation-time);
+  }
+
+  &__content {
+    animation: modal__content-appear var(--animation-time);
+  }
+
+  &_leaving &__content {
+    animation: modal__content-leave var(--animation-time);
+  }
+}
+
+.item-modal-holder {
+  display: none;
+}
+
+.item-description {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    color: var(--color-light);
+    background-color: var(--color-secondary);
+  }
+
+  &__header-text {
+    flex: 1;
+    min-width: 0;
+    margin: 0.5rem 0.75rem;
+  }
+
+  &__status {
+    margin: 0 1rem 0 0;
+  }
+
+  &__close-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    padding: 0 0.5em;
+    color: var(--color-dark);
+    background-color: var(--color-primary);
+
+    svg {
+      height: 1em;
+      width: 0.6875em;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-height: 0;
+
+    display: flex;
+    position: relative;
+
+    background-color: var(--color-light);
+  }
+
+  &__image {
+    background-size: cover;
+    background-position: center;
+
+    @media (--sm) {
+      flex: 1;
+      display: initial;
+    }
+  }
+
+  &__description {
+    flex: 2;
+    padding: 0 0.75rem;
+
+    overflow-y: auto;
+  }
+
+  &_modal {
+    height: 95vh;
+    width: 95vw;
+
+    @media (--sm) {
+      height: 85vh;
+      width: 85vw;
+    }
+
+    @media (--lg) {
+      height: 70vh;
+      width: 60vw;
+    }
+  }
+}

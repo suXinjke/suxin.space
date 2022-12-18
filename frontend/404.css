@@ -1,0 +1,26 @@
+.frog {
+  display: flex;
+  justify-content: center;
+
+  &__image {
+    max-width: 8rem;
+    height: auto;
+    margin: 0 1rem 0 0;
+  }
+
+  &__message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__404 {
+    font-size: 3em;
+    margin: 0;
+  }
+
+  &__not-found {
+    font-size: 2em;
+    margin: 0;
+  }
+}

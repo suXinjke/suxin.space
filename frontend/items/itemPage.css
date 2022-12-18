@@ -1,0 +1,36 @@
+@custom-media --md (min-width: 768px);
+
+.item-page {
+  max-width: 48rem;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  @media (--md) {
+    flex-direction: row;
+  }
+
+  &__image {
+    flex: 1;
+
+    background-size: cover;
+    background-position: center;
+
+    min-height: 24rem;
+
+    margin: 0 0 1rem 0;
+    @media (--md) {
+      margin: 0 1rem 0 0;
+    }
+  }
+
+  &__content {
+    flex: 3;
+  }
+
+  &__content-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}

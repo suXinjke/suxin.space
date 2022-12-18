@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+    "noImplicitThis": true,
+
+    "baseUrl": ".",
+    "target": "ES2015",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "paths": {
+      "@components/*": ["frontend/components/*"]
+    }
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
+}

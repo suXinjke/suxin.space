@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /rbrcz_tourney_revamped/
+Disallow: /rbrcz_prototype/
+Disallow: /react_xoxo/
+Disallow: /red_sun/
+Disallow: /items/
