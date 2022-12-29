@@ -24,11 +24,6 @@ code {
 .note {
   max-width: 48rem;
   margin: 0 auto;
-
-  &__content {
-    display: flex;
-    flex-direction: column;
-  }
 }
 .tweet-embed {
   min-height: 460px;
@@ -39,10 +34,13 @@ code {
 
 .image {
   text-align: center;
-  align-self: center;
 
   img {
     max-width: 100%;
+  }
+
+  &__container {
+    display: inline-block;
   }
 
   &__title {
