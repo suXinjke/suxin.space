@@ -3,11 +3,21 @@ import express from 'express'
 import expressWs from 'express-ws'
 import { readAndProcessCSS, getItemData, render, getNoteData, noteDirs } from './common'
 
-global._devServer = true
+global.injectAutorefresh = true
 
 const app = express()
 const port = 3000
 expressWs(app)
+
+app.use((req, res, next) => {
+  if (req.query.autorefresh === '1') {
+    global.injectAutorefresh = true
+  } else if (req.query.autorefresh === '0') {
+    global.injectAutorefresh = false
+  }
+
+  next()
+})
 
 // GET /notes/whatever/name.ext -> /notes/YYYY-MM-DD_whatever/name.ext
 app.use((req, res, next) => {

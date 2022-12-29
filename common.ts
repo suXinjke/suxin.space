@@ -338,7 +338,7 @@ function generatePage({
   const headScripts = [{ src: '/main.js' }, ...ctx.headScripts]
   const bottomScripts = [
     ...ctx.bottomScripts,
-    ...(global._devServer ? [{ content: autorefreshJS }] : []),
+    ...(global.injectAutorefresh ? [{ content: autorefreshJS }] : []),
   ]
 
   function scriptMapping(s: Script, defer: boolean) {
