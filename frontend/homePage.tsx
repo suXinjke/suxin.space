@@ -74,16 +74,15 @@ export default function HomePage() {
         <div
           class="grid"
           style={makeGridStyles({
-            height: '24rem',
-            columns: '2fr 1fr 1fr',
+            height: '22rem',
+            columns: '2fr 1fr 1.5fr',
             rows: '1fr 1fr',
           })}
         >
           <ItemTitle row="1 / span 2" item="suxin" />
-          <ItemTitle col="2" row="1" item="suxin-twitter" />
-          <ItemTitle col="2" row="2" item="suxin-email" />
-          <ItemTitle col="3" row="1" item="suxin-github" />
-          <ItemTitle col="3" row="2" item="suxin-youtube" />
+          <ItemTitle col="2" row="1" item="suxin-email" />
+          <ItemTitle col="2" row="2" item="suxin-github" />
+          <ItemTitle row="1 / span 2" col="3" item="suxin-youtube" />
         </div>
       </section>
 
@@ -131,17 +130,18 @@ export default function HomePage() {
           style={makeGridStyles({
             height: '72rem',
             columns: 'repeat(6, 1fr)',
-            rows: '1fr 1fr 1fr',
+            rows: '1fr 0.5fr 0.5fr 1fr',
           })}
         >
           <ItemTitle col="1 / span 2" row="1" item="about-this-website" />
           <ItemTitle col="3 / span 2" row="1" item="rss" />
-          <ItemTitle col="5 / span 2" row="1" item="chirpinator" />
-          <ItemTitle col="1 / span 2" row="2" item="blender-goldsource" />
-          <ItemTitle col="3 / span 2" row="2" item="secretary-bird" />
-          <ItemTitle col="5 / span 2" row="2" item="barasite-eve" />
-          <ItemTitle col="1 / span 3" row="3" item="rbr-cz-tourney-creator" />
-          <ItemTitle col="4 / span 3" row="3" item="rbr-cz-analysis" />
+          <ItemTitle col="5 / span 2" row="1" item="retroachievements" />
+          <ItemTitle col="1 / span 2" row="2 / span 2" item="blender-goldsource" />
+          <ItemTitle col="3 / span 2" row="2 / span 2" item="secretary-bird" />
+          <ItemTitle col="5 / span 2" row="2" item="chirpinator" />
+          <ItemTitle col="5 / span 2" row="3" item="barasite-eve" />
+          <ItemTitle col="1 / span 3" row="4" item="rbr-cz-tourney-creator" />
+          <ItemTitle col="4 / span 3" row="4" item="rbr-cz-analysis" />
         </div>
       </section>
     </main>

@@ -414,6 +414,7 @@ export interface ItemData {
   icon?: string
   image?: string
   imagePos?: string
+  imageSize?: string
   status?: string
   statusIcon?: string
   link?: string
@@ -430,14 +431,19 @@ export interface ItemData {
 }
 const items: Record<string, ItemData> = {}
 
-function makeImageStyle(image?: string, imagePos?: string) {
+function makeImageStyle(image?: string, imagePos?: string, imageSize?: string) {
   let imageStyle = ''
 
   if (image) {
     imageStyle += `background-image: url('${image}');`
 
     if (imagePos) {
-      imageStyle += `background-position: ${imagePos}`
+      imageStyle += `background-position: ${imagePos};`
+    }
+
+    if (imageSize) {
+      imageStyle += `background-size: ${imageSize};`
+      imageStyle += `background-repeat: no-repeat;`
     }
   }
 
@@ -449,6 +455,7 @@ export function processItemShowcase(item: ItemData) {
     title: item.title,
     image: item.image,
     imagePos: item.imagePos,
+    imageSize: item.imageSize,
     subtitle: item.subtitle,
     link: item.link,
   }
@@ -457,7 +464,7 @@ export function processItemShowcase(item: ItemData) {
     Object.assign(firstItem, item.showcase[0])
   }
 
-  const imageStyle = makeImageStyle(firstItem.image, firstItem.imagePos)
+  const imageStyle = makeImageStyle(firstItem.image, firstItem.imagePos, firstItem.imageSize)
 
   return {
     ...firstItem,
