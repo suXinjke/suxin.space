@@ -72,6 +72,22 @@ export default function NotePage({ note }: NotesPageProps) {
       </h1>
       <h3 class="uppercase">{note.dateReadable}</h3>
 
+      {note.tableOfContents && (
+        <ul class="table-of-contents">
+          {note.headers
+            .filter(h => h.depth < 4)
+            .map(({ depth, text, slug }) => {
+              const style = depth === 3 ? 'padding-left: 1rem' : undefined
+
+              return (
+                <li style={style}>
+                  <a href={'#' + slug}>{text.replace(/(^\*+|\*+$)/g, '')}</a>
+                </li>
+              )
+            })}
+        </ul>
+      )}
+
       <div class="note__content" innerHTML={{ __dangerousHtml: note.html }}></div>
       {seeAlsoItems.length > 0 && (
         <>

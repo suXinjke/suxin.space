@@ -57,35 +57,6 @@ marked.use({
       return `<h${level} id="${id}">${text}${link}</h${level}>`
     },
   },
-
-  walkTokens(token) {
-    // HACK: typescript casting + prettier does weird stuff otherwise
-    const tokenAny = token
-
-    // Wrap $tabs with ImageTabs component
-    if (
-      token.type === 'paragraph' &&
-      token.raw.startsWith('$tabs') &&
-      token.tokens.some(t => t.type === 'image')
-    ) {
-      const id = token.tokens[0].raw.match(/\$tabs\s+(\w+)/)[1]
-      const images = token.tokens.reduce((prev, i) => {
-        if (i.type === 'image') {
-          prev.push({
-            href: i.href,
-            title: naiveDecodeHTMLEntities(i.text),
-          })
-        }
-
-        return prev
-      }, [])
-
-      const html = renderSSR(h(ImageTabs, { id, images }))
-      tokenAny.type = 'html'
-      token.raw = html
-      token.text = html
-    }
-  },
 })
 
 interface Script {
@@ -501,9 +472,11 @@ export interface NoteData {
   description: string
   image: string
   showcase?: ItemData['showcase']
+  tableOfContents?: boolean
 
   id: string
   html: string
+  headers: Array<{ depth: number; text: string; slug: string }>
   dateReadable: string
 
   headScripts?: string | string[]
@@ -548,11 +521,53 @@ export function getNoteData(noteName: string): NoteData {
   }
   const noteFrontMatter = fm<NoteData>(file)
 
+  const headers = []
+  const slugger = new marked.Slugger()
+  const html = marked(noteFrontMatter.body, {
+    walkTokens(token) {
+      // HACK: typescript casting + prettier does weird stuff otherwise
+      const tokenAny = token
+
+      // Wrap $tabs with ImageTabs component
+      if (
+        token.type === 'paragraph' &&
+        token.raw.startsWith('$tabs') &&
+        token.tokens.some(t => t.type === 'image')
+      ) {
+        const id = token.tokens[0].raw.match(/\$tabs\s+(\w+)/)[1]
+        const images = token.tokens.reduce((prev, i) => {
+          if (i.type === 'image') {
+            prev.push({
+              href: i.href,
+              title: naiveDecodeHTMLEntities(i.text),
+            })
+          }
+
+          return prev
+        }, [])
+
+        const html = renderSSR(h(ImageTabs, { id, images }))
+        tokenAny.type = 'html'
+        token.raw = html
+        token.text = html
+      }
+
+      if (token.type === 'heading') {
+        headers.push({
+          depth: token.depth,
+          text: token.text,
+          slug: slugger.slug(token.text),
+        })
+      }
+    },
+  })
+
   notes[noteName] = {
     ...noteFrontMatter.attributes,
     dateReadable: new Date(noteFrontMatter.attributes.date).toDateString().replace(/^[^\s]+\s/, ''),
     id: noteName.toLowerCase(),
-    html: marked(noteFrontMatter.body),
+    html,
+    headers,
   }
 
   return notes[noteName]
