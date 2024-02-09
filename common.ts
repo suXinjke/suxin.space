@@ -25,6 +25,7 @@ import Image from '@components/image'
 import Prism from 'prismjs'
 import addPrismLanguages from 'prismjs/components/index'
 import ImageTabs from '@components/image-tabs'
+import Spoiler from '@components/spoiler'
 addPrismLanguages()
 
 function naiveDecodeHTMLEntities(str: string) {
@@ -548,6 +549,19 @@ export function getNoteData(noteName: string): NoteData {
         }, [])
 
         const html = renderSSR(h(ImageTabs, { id, images }))
+        tokenAny.type = 'html'
+        token.raw = html
+        token.text = html
+      }
+
+      if (token.type === 'code' && (token.lang === 'question' || token.lang === 'warning')) {
+        const splitIndex = token.text.indexOf('\n\n')
+        const header = token.text.slice(0, splitIndex)
+        const content = marked(token.text.slice(splitIndex + 2))
+
+        const html = renderSSR(
+          h(Spoiler, { type: token.lang, header, slug: slugger.slug(header), content }),
+        )
         tokenAny.type = 'html'
         token.raw = html
         token.text = html

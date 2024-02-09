@@ -144,3 +144,30 @@ table {
     text-decoration: underline;
   }
 }
+
+.spoiler {
+  position: relative;
+
+  & + & {
+    margin-top: 1rem;
+  }
+
+  summary {
+    padding: 1rem 1.5rem;
+    font-size: 1.2em;
+    cursor: pointer;
+
+    background-color: var(--color-primary);
+  }
+
+  section {
+    padding: 1rem 1.5rem;
+    background-color: var(--color-gray);
+  }
+
+  &__icon {
+    color: var(--color-dark);
+    width: 1.2em;
+    float: right;
+  }
+}
