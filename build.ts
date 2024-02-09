@@ -33,9 +33,12 @@ function mkdirCustom(filePaths: string[]) {
 }
 
 async function build() {
-  const [itemNames, assetFilePaths, staticFilePaths] = await Promise.all([
+  const [itemNames, noteDirsAndSubdirs, assetFilePaths, staticFilePaths] = await Promise.all([
     glob('./frontend/items/**/*.md').then(itemFilePaths =>
       itemFilePaths.map(f => path.parse(f).name),
+    ),
+    glob('./frontend/notes/**/').then(noteDirPaths =>
+      noteDirPaths.map(f => f.replace(/(notes[\\/])(.+?_)/, '$1')),
     ),
     glob('./frontend/**/*.@(js|css|jpg|jpeg|png|gif|wav|mp4)'),
     glob('./static/**/?(*.*|CNAME)', { dot: true }),
@@ -46,7 +49,7 @@ async function build() {
 
   mkdirCustom([
     ...itemsToRender.map(i => `${outputDir}/items/${i}/index.html))`),
-    ...noteNames.map(n => `${outputDir}/notes/${n}/index.html`),
+    ...noteDirsAndSubdirs.map(n => n + '.'),
     ...staticFilePaths,
   ])
 

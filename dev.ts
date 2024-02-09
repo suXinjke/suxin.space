@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 
 // GET /notes/whatever/name.ext -> /notes/YYYY-MM-DD_whatever/name.ext
 app.use((req, res, next) => {
-  const match = req.url.match(/\/notes\/(.+)\/(?!$|\?)/)
+  const match = req.url.match(/\/notes\/(.+?)\/(?!$|\?)/)
   if (match) {
     const noteName = match[1]
     if (!noteDirs[noteName]) {
