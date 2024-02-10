@@ -22,8 +22,10 @@ code {
 }
 
 .note {
-  max-width: 48rem;
   margin: 0 auto;
+}
+.note.short-width {
+  max-width: 48rem;
 }
 .tweet-embed {
   min-height: 460px;

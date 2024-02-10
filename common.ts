@@ -473,6 +473,7 @@ export interface NoteData {
   image: string
   showcase?: ItemData['showcase']
   tableOfContents?: boolean
+  fullPageWidth?: boolean
 
   id: string
   html: string

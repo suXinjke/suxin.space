@@ -66,7 +66,7 @@ export default function NotePage({ note }: NotesPageProps) {
   }
 
   return (
-    <main class="readable note">
+    <main class={`readable note${note.fullPageWidth ? '' : ' short-width'}`}>
       <h1>
         <strong>{note.title}</strong>
       </h1>
