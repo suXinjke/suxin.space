@@ -48,7 +48,7 @@ async function build() {
   const noteNames = Object.keys(noteDirs)
 
   mkdirCustom([
-    ...itemsToRender.map(i => `${outputDir}/items/${i}/index.html))`),
+    ...itemsToRender.map(i => `${outputDir}/items/${i}/index.html`),
     ...noteDirsAndSubdirs.map(n => n + '.'),
     ...staticFilePaths,
   ])
