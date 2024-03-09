@@ -35,14 +35,14 @@ If you feel like it, check out this video: [Learn Reverse Engineering (for hacki
 
 ## **The path of least resistance**
 
-This section is mostly a reminder on how one could *atleast try* dealing with pointers without learning the complex stuff, in RAIntegration:
+This section is mostly a reminder on how one could *at least try* dealing with pointers without learning the complex stuff, in RAIntegration:
 
 1. Find the address of the value, write it down, make Save State 1
 2. Restart the game, or start at different level - whatever that will make the value appear at different address. Find the address of the value, write it down, make Save State 2
 3. Calculate the difference between the addresses. For example: if Save State 1 had value at `0x1717D8` and Save State 2 had value at `0x178CA4`, the difference is `0x178CA4 - 0x1717D8 = 0x74CC`
 4. Load Save State 1, make a new search for 32-bit (Aligned) values (my example is PSX so it takes that much)
 5. Load Save State 2, then do filter either by Last Value Plus or Last Value Minus, in my case I will have to go by `0x74CC` for Last Value Plus
-6. You get several candidates, one of them might be the pointer you seek, good luck
+6. You're likely to get several candidates, one of them might be the pointer you seek, good luck
     * If you had Save State 3 with 3rd address, it could further help to lower amount of candidates. In my case some addresses also flickered and I could get rid of them
     * I also recommend you pick addresses that result in lowest possible offsets
 
@@ -90,7 +90,7 @@ It doesn't matter much if you choose C or C++ here. I recommend these because yo
   * Understand that everything you have seen in Memory Inspector, any data at any address can be *interpreted* as those data types
   * Optional: learn bitwise operators and bitmasks if you encountered them when making achievements. If you ever had to make conditions that target Bit0, Bit1 and so on - those likely were part of bitmask. Reminder that this also requires understanding binary [[1]](https://www.programiz.com/c-programming/bitwise-operators) [[2]](https://www.learn-c.org/en/Bitmasks)
 * Learn basic control flow: conditional *if statements* and logical operators (AND/OR/NOT)
-* Learn loops: *for loop*, *while loop*
+* Learn loops: *for loop*, *while loop*, *do while loop*
 * Learn to define your own functions so the code can be reused
 * Learn what variable scope is: how it can be scoped locally to a function, locally to `{}` blocks, or scoped globally
 
@@ -163,18 +163,17 @@ I recommend you open the screenshot below in separate window so you can follow a
 
 I have put a breakpoint on line 16 and then ran the debugger, now I can go over small details:
 
-* Look at the line 23 that allocated a struct on the heap, if I look at the Locals window on top right, or hold the mouse over `aircraft` pointer, it shows me that it got allocated on heap at `0x00D90DA0`
-  * But commentary above also says that pointer itself is located on stack, I can easily check it's location on stack by adding `&aircraft` into the Watch window on middle right, which reveals address `0x008FF77C`
-  * Notice that this address is near tip of the stack, which is indicated by ESP register (CPU registers will be covered later, just note that it's indeed on stack)
-  * Notice that I can visit this address in one of the memory windows (Memory 1 on bottom left, similar to Memory Inspector), and the stored 4 bytes at that address represent `0x00D90DA0`, it's stored backwards, in little-endian, which is something you also might have noticed during *RAM digging*. In Visual Studio, those memory windows can be accessed in menu: Debug -> Windows -> Memory
-  * This example runs on Windows and I guess that's the reason why stack segment happens to be on lower address range compared to heap, which does not match [the diagram](https://static.javatpoint.com/cpages/images/memory-layout-in-c.png) you've seen before
-* Now I can follow `0x00D90DA0` in a different memory window (Memory 2) and start comparing what I see there with struct definition and what's shown in the Locals window
-  * Notice that values do match the default values of struct and also what I specified on lines 24-28, with the exception of pos[0] which was already modified by line 15
-  * Take note of pointer at `0x00D90DA0 + 0x28`, it was attached on line 34. This is pointer to the pointer situation. I can also follow that address: `0x00D90C98` in yet another memory window (Memory 3), and data found there also matches what Locals window show
+* Look at line 21 that defined a global pointer that would hold player's aircraft data. This is something that you'd be hunting for to define good pointer chains for achievements, because address of this pointer itself never changes
+  * I can check it's memory address by adding `&playerAircraft` into the Watch window on middle right, which reveals address `0x00515C88`
+  * Notice that restarting the program results in same address shown for `&playerAircraft`, which is expected for such global variable. It will likely change only if you recompile the program
+  * Notice that I can visit this address in one of the memory windows (Memory 1 on bottom left, similar to Memory Inspector), and the stored 4 bytes at that address represent `0x00C87CF8`. It's stored backwards, in little-endian, which is something you also might have noticed during *RAM digging*. In Visual Studio, those memory windows can be accessed in menu: Debug -> Windows -> Memory
+* Now I can follow `0x00C87CF8` in a different memory window (Memory 2) and start comparing what I see there with struct definition and what's shown in the Locals window
+  * Notice that values do match the default values of struct and also what I specified on lines 27-31, with the exception of pos[0] which was already modified by line 15
+  * Take note of pointer at `0x00C87CF8 + 0x28`, it was attached on line 34. This is pointer to the pointer situation. I can also follow that address: `0x00C90F28` in yet another memory window (Memory 3), and data found there also matches what Locals window show
 * <span id="negative-offset-remark">Notice that all offsets for the struct are positive, and regular programmers deal with such structs all the time, all with positive offsets. This is to explain why one shouldn't rely on negative offsets in the achievement code - it's merely something lucky that can work instead of being perfect solution that matches the original program</span>
 * If I press Step Over button, line 16 will get executed and debugger stops at line 17, the changes to pos[1] value will be seen in Locals and Memory 2 windows
-* If I were to press Step Out button on the toolbar at the top, remainder of moveAircraft function will be executed and debugger will stop at line 36 after executing the function, the changes to aircraft->pos will be seen in Locals and Memory 2 windows
-* To practice usage of Step In button on the toolbar at the top, I could put a breakpoint on Line 36, and check what happens when using Step In button compared to Step Over
+* If I were to press Step Out button on the toolbar at the top, remainder of moveAircraft function will be executed and debugger will stop at line 37 after executing the function, the changes to aircraft->pos will be seen in Locals and Memory 2 windows
+* To practice usage of Step In button on the toolbar at the top, I could put a breakpoint on Line 37, and check what happens when using Step In button compared to Step Over
 
 Here's the original code that you can copy paste if you wish:
 
@@ -198,20 +197,24 @@ void moveAircraft( Aircraft *aircraft ) {
   aircraft->pos[2] += aircraft->velocity[2];
 }
 
+
+Aircraft *playerAircraft;
+
 int main() {
-  Aircraft *aircraft = new Aircraft;
-  aircraft->pos[0] = 0x80;
-  aircraft->pos[1] = 0x50;
-  aircraft->pos[2] = 0xCAFE;
-  aircraft->velocity[0] = -0x10;
-  aircraft->velocity[1] = -0x20;
 
-  Aircraft *target = new Aircraft;
-  strcpy_s( target->id, "SHREK" ); // set the id to SHREK
 
-  aircraft->target = target;
+	playerAircraft = new Aircraft;
+	playerAircraft->pos[0] = 0x80;
+	playerAircraft->pos[1] = 0x50;
+	playerAircraft->pos[2] = 0xCAFE;
+	playerAircraft->velocity[0] = -0x10;
+	playerAircraft->velocity[1] = -0x20;
 
-  moveAircraft( aircraft );
+
+	playerAircraft->target = new Aircraft;
+	strcpy_s( playerAircraft->target->id, "SHREK" ); // set the id to SHREK
+
+	moveAircraft( playerAircraft );
 
   return 0;
 }
@@ -229,7 +232,7 @@ I already mentioned that machine code will be executed by CPU *it was compiled f
 
 The consoles you're developing achievements for may have rather distinct architectures. This blogpost has examples for Playstation consoles: PSX, PS2 and PSP, which at their core are [MIPS](https://en.wikipedia.org/wiki/MIPS_architecture).
 
-Even if disassembly output is more human-readable, it certainly isn't compared to C, atleast until you get used to actually reading it. What could be one line of C++ code may explode into several very trivial lines of assembly language. Countless amount of lines that do very trivial things, such as:
+Even if disassembly output is more human-readable, it certainly isn't compared to C, at least until you get used to actually reading it. What could be one line of C++ code may explode into several very trivial lines of assembly language. Countless amount of lines that do very trivial things, such as:
 
 * Read the RAM at specified address, store result in specified CPU register
 * Read values in CPU registers, do something like math, write the result into CPU register
@@ -295,7 +298,7 @@ Pointer [32-bit]
 ### **Debugger usage**
 
 1. Install [PCSX-Redux](https://github.com/grumpycoders/pcsx-redux) emulator, [Windows x64 builds are here](https://install.appcenter.ms/orgs/grumpycoders/apps/pcsx-redux-win64/distribution_groups/public)
-    * This emulator can be confusing compared to what most other people use for regular play, so instructions also inclde loading and running the game
+    * This emulator can be confusing compared to what most other people use for regular play, so instructions also include loading and running the game
     * Other choices of PSX emulators with debugger support are [no$psx](https://problemkaputt.de/psx.htm) which I found less intuitive. [pSX 1.13](https://www.emulator-zone.com/doc.php/psx/psx_em.html) also known as psxfin has debugger with terrible UI, [here's forum thread with it's usage](https://www.zophar.net/forums/index.php?threads/tutorial-using-a-debugger-to-figure-out-game-mechanics.13521/). There's [PCSX with Debugger](https://www.romhacking.net/utilities/267/). [Duckstation](https://www.duckstation.org/) has debugger in it, but at the moment of writing it's barebones and not recommended, hope it will become good eventually so you could run it together with RAIntegration
     * For some reason I had latest versions with GLFW integration [crash with this message](./pcsx-debugger/pcsx-redux-error.png), I understand the error but not why it happens. **Running with administrator rights** made it work, some time later running it without admin rights also didn't cause crash, I don't know why. It also still crashes when opening emulator settings without admin rights
 
@@ -485,7 +488,7 @@ Pointers to pointers is when it becomes less trivial to deal with. This is when 
 
 I'm dealing with PS2 now, it's still MIPS, but now with 64-bit and floating-point support. The instruction set is broader, but overall disassembly experience shouldn't be worse than PSX. Because of 64-bit support, register values can hold large amount of data, but in practice you will look at bottom quarter part of the register.
 
-![Bunch of huge register values in PCSX2 debubger, you will focus on rightmost part of these, ignore leftover value garbage on the left](./pcsx2-registers.png)
+![Bunch of huge register values in PCSX2 debugger, you will focus on rightmost part of these, ignore leftover value garbage on the left](./pcsx2-registers.png)
 
 Let's look into [Gran Turismo 4: Prologue](https://retroachievements.org/game/19283), one of the code notes allows to track player's current position during the race (it's part of HUD). That value ended up useful for checking if player won the race. This value is only one pointer deeper compared to PSX example:
 
@@ -561,7 +564,7 @@ This isn't easy to answer this time: this debugger lacks highlighting selected r
 
 ![After stepping out](./pcsx2-debugger-1/pcsx2-debugging-2.png)
 
-I try to scroll up to see if anything writes into `s2` - and notice `00304100 addiu s2, s1, 0x250` instruction, which means: calculate a sum of value in `s1` register and constant value of `0x250`, then store it in `s2` register. I set an Execute breakpoint on that instruction to look into value of `s1` register during that moment (I have to press *Run* button to make that breakpoint activate on next frame rendered).
+I try to scroll up to see if anything writes into `s2` - and notice `00304100 addiu s2, s1, 0x250` instruction, which means: calculate a sum of value in `s1` register and constant value of `0x250`, then store it in `s2` register. I set a break-on-execute breakpoint on that instruction to look into value of `s1` register during that moment (I have to press *Run* button to make that breakpoint activate on next frame rendered).
 
 ![](./pcsx2-debugger-1/pcsx2-debugging-3.png)
 
@@ -571,7 +574,7 @@ Next question: **where did value of `s1` and `0x1FCDF90` come from?** Scrolling 
 
 ![](./pcsx2-debugger-1/pcsx2-debugging-4.png)
 
-What's above me is `jalr v1` which is unfortunate (I'm worried that it might be called with different addresses from `v1`), and none of the registers have value of `0x1FCDF90` anymore. It doesn't hurt to try to double click the `jalr` instruction to set Execute breakpoint, disable all other breakpoints (they have checkbox for that in the list), and press Run at the top right of Debugger to see what happens.
+What's above me is `jalr v1` which is unfortunate (I'm worried that it might be called with different addresses from `v1`), and none of the registers have value of `0x1FCDF90` anymore. It doesn't hurt to try to double click the `jalr` instruction to set break-on-execute breakpoint, disable all other breakpoints (they have checkbox for that in the list), and press Run at the top right of Debugger to see what happens.
 
 ![](./pcsx2-debugger-1/pcsx2-debugging-5.png)
 
@@ -579,7 +582,7 @@ Fortunately, when that breakpoint activates, the register values are always the 
 
 ![](./pcsx2-debugger-1/pcsx2-debugging-6.png)
 
-There is an instruction `0x002F9D7C lw a2, 0x404(s0)`, if I put Execute breakpoint on that and check what happens to `a2` register - it's indeed getting the desired value `0x1FCDF90`, the `0x404(s0)` indicates this value comes from address `0x1FCA750 + 0x404`, next question: **where did value of `s0` and `0x1FCA750` come from?**
+There is an instruction `0x002F9D7C lw a2, 0x404(s0)`, if I put break-on-execute breakpoint on that and check what happens to `a2` register - it's indeed getting the desired value `0x1FCDF90`, the `0x404(s0)` indicates this value comes from address `0x1FCA750 + 0x404`, next question: **where did value of `s0` and `0x1FCA750` come from?**
 
 When I break on that instruction, it shows that `a0` also has same value, meaning it was an argument for the function I'm currently in, I should Step Out of function.
 
@@ -652,7 +655,7 @@ Aren't we supposed to avoid negative offsets, how come it's negative here?
 
 The [negative offset remark](#negative-offset-remark) was about *structures of data* from programmer's point of view. What's seen here got nothing to do with that. What *compiler* did and what code it produced ain't exactly for us to argue with, and it just so happened that it was convenient enough to put what seems like global variables below `0x00500000`, which *naturally* results in such offsets.
 
-You may wonder: if compiler knows better, why not have single instruction that would store the exact address into register? Answer lies within the fact that all MIPS instructions are 32-bit (4 bytes) long. The value `0x004FA8C4` itself needs atleast *three* bytes, so it just won't fit.
+You may wonder: if compiler knows better, why not have single instruction that would store the exact address into register? Answer lies within the fact that all MIPS instructions are 32-bit (4 bytes) long. The value `0x004FA8C4` itself needs at least *three* bytes, so it just won't fit.
 
 So the compiler is smart enough to calculate the final address with two instructions (ignore `jr ra`), and those two fit. Here's the screenshot from Ghidra disassembly, look into machine code on the left:
 
@@ -704,7 +707,7 @@ Assume I already tracked down the value for that displayed last lap time. I choo
 
 It shows an `0x40` offset to pointer stored in `s1`, next question: where did value of `0x1BE2CFC` in `s1` come from? Looking several instructions above, there's: `003B6A40 addiu s1, s0, 0x119C`. It relies on register value of `s0` so it's worth answering the question of where value of `s0` came from, too, which is right above: `003B6A38 daddu s0, a0, zero`.
 
-So by setting an Execute breakpoint at instruction `003B6A38` and crossing the finish line again, I see that register `a0` has value of `0x1BE1B60`, it will be copied to `s0` register. Then value of `0x1BE1B60 + 0x119C` will be set to `s1` register. What you should take note of, is that the pointer worth dealing with is not `0x1BE2CFC`, but `0x1BE1B60`, and entire offset for achievement code will be `0x119C + 0x40 = 0x11DC`, which matches the code note.
+So by setting a break-on-execute breakpoint at instruction `003B6A38` and crossing the finish line again, I see that register `a0` has value of `0x1BE1B60`, it will be copied to `s0` register. Then value of `0x1BE1B60 + 0x119C` will be set to `s1` register. What you should take note of, is that the pointer worth dealing with is not `0x1BE2CFC`, but `0x1BE1B60`, and entire offset for achievement code will be `0x119C + 0x40 = 0x11DC`, which matches the code note.
 
 ![](./pcsx2-debugger-2/pcsx2-debugging-1a.png)
 
@@ -780,7 +783,7 @@ This section assumes you've seen the [PSX example](#decompiler-usage) and are co
 
 ![](./pcsx2-decompiler-1/ghidra-analyze.png)
 
-Now instead of reading diassembly ourselves, let's see how Ghidra decompiled it instead by visiting previously seen instruction at `0x003B6A38`:
+Now instead of reading disassembly ourselves, let's see how Ghidra decompiled it instead by visiting previously seen instruction at `0x003B6A38`:
 
 ![](./pcsx2-decompiler-1/ghidra-decompiler-pcsx2-1.png)
 
@@ -837,7 +840,7 @@ For this marked `deep_1` function it's easy to check it's start of disassembly: 
 
 ![](./pcsx2-decompiler-1/ghidra-xref-1.png)
 
-Alternatively, you can Right Click on most things in both Decompiler and Diassembly, to select References - Find References to *whatever*. This shows a dialog with same lone call.
+Alternatively, you can Right Click on most things in both Decompiler and Disassembly, to select References - Find References to *whatever*. This shows a dialog with same lone call.
 
 ![](./pcsx2-decompiler-1/ghidra-xref-2.png)
 
@@ -847,7 +850,7 @@ After following the call, I immediately renamed the function into `deep_2_003c0c
 
 ![](./pcsx2-decompiler-1/ghidra-decompiler-pcsx2-3.png)
 
-The previously seen `0x11DC` offset depended on `param_1` passed to `deep_1`, and here it's stored in `pcVar1` on line 9. The C code that calculates value of `pcVar1` is hard to read because of nested derefences, but you can recognize the previously seen offsets too. It's possible to make more readable if I write it like this:
+The previously seen `0x11DC` offset depended on `param_1` passed to `deep_1`, and here it's stored in `pcVar1` on line 9. The C code that calculates value of `pcVar1` is hard to read because of nested dereferences, but you can recognize the previously seen offsets too. It's possible to make more readable if I write it like this:
 
 ```
 pcVar1 = *(char **)(
@@ -1074,6 +1077,162 @@ For now, let's set same kind of breakpoint that was done in PPSSPP previously: b
 Just like before, unpausing the game and letting the score increase will make breakpoint activate. You'll have access to both disassembly of memory and original executable, with decompiled code that was already shown before. The buttons to step through the instructions can be found on toolbar above, just like in previously seen debuggers.
 
 ![](./ppsspp-decompiler-2/ghidra-debugger-4.png)
+
+## **Pointer to array of pointers, PSX game, PCSX-Redux**
+
+Games often have multiple instances of something: multiple enemies, multiple competitors, multiple score tables. Multiple of anything can be stored inside arrays which you should be familiar with from programming basics.
+
+Let's continue from [Ace Combat 3 example](#pointer-psx-game-pcsx-redux) and try to find out where health value of some aircraft originates from. On screenshot below I pursue some craft, I want to know how to get it's health value and be able to do it for all the other aircraft during the mission.
+
+![](./ace3-tgt.jpg)
+
+### **Debugger usage**
+
+I will not go into detail of tracking down the health value using Memory Observer. The value for that specific aircraft on screenshot above is 16-bit signed integer located at `0x80140126`, here's the code I landed on after setting a break-on-write breakpoint at that address and attempting to damage the aircraft:
+
+![](./pcsx-debugger-2/pcsx-debugger-1.jpg)
+
+The health is stored at `0x4e` offset to `0x801400d8`. Instead of skimming through too much code above to spot what exactly set that address in `s0` register, I just search for original pointer in memory:
+
+![](./pcsx-debugger-2/pcsx-memory-search-1.jpg)
+![](./pcsx-debugger-2/pcsx-memory-search-1a.jpg)
+
+I get two candidates: `0x8013fe28` and `0x80142ea4`. If I follow `0x8013fe28` address in Memory Editor, I see many pointers grouped together and can immediately assume they're part of an array - they all look similar with each 4th byte being `0x80` and you can also notice how the addresses increase if you read them left to right. Wish I could prove where the array begins using the code, for that I will set a break-on-read breakpoint for found pointer at address `0x8013fe28`, this is the code I landed on:
+
+![](./pcsx-debugger-2/pcsx-debugger-2.jpg)
+
+Relevant code was fortunate to be grouped together: `0x8013fe28` comes straight from `t1` register, which depends on values from registers of `t0` and `a2`. Looking at `t0` - it originates from `gp` register, therefore search ends here. `gp` register value is not pictured, it's `0x800bcb74`.
+
+`0x800bcb74 + 0x02e8 = 0x800bce5c` and this address points to the start of the array at `0x8013fe14`. It's important to mention that instruction I originally broke to at `0x8003813c` is actually part of loop, unfortunately this debugger doesn't make it obvious that some code below can jump back to same instruction. If I put a break-on-execute breakpoint on that instruction instead of break-on-read and keep pressing *Resume*, I can notice that `a2` register keeps increasing by 4 with every break and eventually starting over, implying iteration and therefore implying dealing with arrays. Do be aware of such moments so you can come up with correct conclusions.
+
+### **Decompiler usage**
+
+Now checking the same first instruction that I broke into in Ghidra drops me inside middle of a rather big function:
+
+![](./pcsx-decompiler-2/ghidra-decompiler-pcsx-1.jpg)
+
+To make it more easy to find all usages of `puVar5`, I can highlight it by Right Clicking -> Secondary Highlight -> Set Highlight. There's also regular Highlights but they disappear if you click anywhere else after.
+
+![](./pcsx-decompiler-2/ghidra-highlight.jpg)
+
+I have already set `gp` register value to `0x800bcb74`, here's the screenshots of top and bottom of the function:
+
+![](./pcsx-decompiler-2/ghidra-decompiler-pcsx-2.jpg)
+![](./pcsx-decompiler-2/ghidra-decompiler-pcsx-2a.jpg)
+
+* Scrolling up reveals `PTR_PTR_DAT_800bce5c` right away, which has pointer to array of pointers [as it was seen](./pcsx-debugger-2/pcsx-debugger-2.jpg) in previous Debugger usage section
+* The function starts with the `do {` block and has correspondent `} while (true)` at the bottom
+* Loop stops once `iVar7` reaches the value of `0x40`, given the `if (0x3f < iVar7)` condition. `iVar7` starts at value of 2 (line 15) and only increases by 1 (line 188)
+* Take note of `iVar9` - it's increased by 4 on line 189 and it's added to the pointer held at `PTR_PTR_DAT_800bce5c` on line 19, that naturally makes `puVar5` hold each array element that was [seen there](./pcsx-debugger-2/pcsx-memory-search-1a.jpg)
+* No doubt anymore, this code iterates array, start of which is held by `PTR_PTR_DAT_800bce5c`. Ideally this decompiler would present it as *for loop*, maybe it's possible to give enough hints to Ghidra to achieve such output, maybe it's less trivial than I think
+
+So given all that, just by decompiling one function you'd piece everything together and start using the `0xbce5c` in the achievement code. Fortunately the way this game works, each array element holds data about exactly same aircraft during the specific mission, so achievement code is allowed to pick very specific array elements.
+
+## **Linked list, PS2 game, PCSX2**
+
+I'm not going to explain Linked List data structure, it was suggested you'd learn it on your own in Programming basics section, [here's a reminder](https://www.programiz.com/dsa/linked-list) if you need it. You should be aware while the core idea of linked list stays the same, the contents of each node may be vastly different between the games. Sometimes linked list elements can include pointer to previous element, or be circular - the final element will hold pointer to the first element of the list.
+
+This section will explore how linked list may get recognized in Debugger, then decompiled code traversing it will be explored.
+
+For all achievement sets I developed for RetroAchievements, I personally never encountered linked lists, yet other people do sometimes and they tend to hold really weird stuff in them that doesn't necessary make much sense. For example I've looked into [Tony Hawk's Underground 2](https://retroachievements.org/game/19804), there are achievements that need to track *Goal completion*, and state for those goals is stored in linked list of all things. One of the achievements needs to be able to access all goal data to check if they are all completed.
+
+```question
+Is there a rationale behind such linked lists beyond fast element insert and removal?
+
+I don't know why Goals are stored like that. The instincts cynically tell me developers not caring and just picking the option. Then thinking about it again - maybe developers needed a dynamic container that's not `std::vector`, which potential growth would lead to reallocations and that's not desirable given limited amount of PS2 RAM? This also allows to combat memory fragmentation because new list elements could just fill free memory holes, instead of entire array potentially having no space left for reallocation, which may sound good. You could also hold the pointer to linked list element and not be worried that it becomes invalid, because there would be no potential reallocations compared to `std::vector` if it decides to grow.
+
+I'm not familiar with game and I'd expect there to be same amount of Goals per level, which still leaves me with the feeling that linked list was unnecessary.
+
+Overall I wish some veteran developer would answer this by remembering their practices.
+```
+
+![List of Goals for the Tutorial, all of them must be completed for achievement](./tonyu2-goals.jpg)
+
+### **Debugger usage**
+
+Let's assume I'm on Goal no. 3 *Grind the rail*, and I already found out where relevant completion flags are in memory -  at `0x016d8d60`. Normally I'd probably do a break-on-write breakpoint and complete the goal, but break-on-read results in better demonstration:
+
+![](./pcsx2-debugger-3/pcsx2-debugging-1.png)
+
+Sometimes you're lucky and PCSX2 Debugger can identify and highlight individual functions, which happened here. There's an `0x70` offset to `0x16D8CF0`, let's not bother checking the code and just memory search that address:
+
+![](./pcsx2-debugger-3/pcsx2-debugging-1a.png)
+
+While the `0xB9665C` and `0xB96660` addresses look promising because they're both much lower and `sp` register is `01FFF970`, if I were to try them out while different goals are active - they would hold a different address. Turns out they hold a pointer to current goal, but the achievement code would have to check the state of *all goals*, so those two candidates are useless. If you scan Memory with your own eyes in region around `0xB9665C` - it's not like there's an array or anything like that either.
+
+This leaves `0x16D8DF4` for investigation. There's no point checking `0x16D8CF4` because it's only 4 bytes after originally found `0x16D8CF0`, remember the `0x70` offset? I can assume the structure is at least 0x70 bytes long, no point checking the pointer that leads to itself.
+
+I try setting break-on-read breakpoint for `0x016D8DF4`, which leads to this code:
+
+![](./pcsx2-debugger-3/pcsx2-debugging-2.png)
+
+There's [Branch Delay](#branch-delays) and `0x4` offset to `0x16D8DF0`, let's memory search that address:
+
+![](./pcsx2-debugger-3/pcsx2-debugging-2a.png)
+
+The `0xB96644` didn't previously appear, but if you were to try it out for achievement logic right now, you'd find you can't rely on it. This leaves only a candidate of `0x016D8CD8`, I try setting break-on-read breakpoint for that address:
+
+![](./pcsx2-debugger-3/pcsx2-debugging-3.png)
+
+`0x8` offset to `0x016D8CD0`, memory searching that address reveals:
+
+![](./pcsx2-debugger-3/pcsx2-debugging-3a.png)
+
+Which looks very similar to past result, and if I set a break-on-read breakpoint for `0x016D8BB8`, I will land on exactly same code as shown above - which is good evidence to suspect a linked list. Think about it: same code, same offsets, but pointer values in register change - the code you'd write for traversing linked list would give similar impressions, the only difference is I'm traversing backwards.
+
+It's worth setting break-on-execute breakpoint on that instruction I landed on and notice that value at `v0` keeps increasing by 1 each time I press *Run*, with pointer value also increasing, implying iteration. Considering there was no array found previously, it's also evidence for linked lists.
+
+And yet linked list has to originate somewhere. I can choose to keep traversing pointers backwards, and given that I only decided to research all this starting from Goal 3, I'm lucky to get only to one candidate soon:
+
+![](./pcsx2-debugger-3/pcsx2-debugging-3b.png)
+
+This address matches the one that was in the code note and used for achievements. Traditionally I validated these in previous examples, but it turned out to be tough for this one, I will try to validate it using Decompiler later.
+
+So the address to first node of Linked list is held at `0xB99663C`. If you wish to go to next node - you need to check an offset of `0x8` of node you're currently at and follow the pointer. You'd be doing that until you arrive to node representing the Goal you're interested in. Once that's done - it's about following previously found `0x4` and `0x70` offsets:
+
+```
+AddAddress 32-bit 0xb9663c
+AddAddress 32-bit 0x8
+AddAddress 32-bit 0x8
+AddAddress 32-bit 0x4
+Mem        Bit2   0x70      .. conditions ..
+```
+
+### **Decompiler usage**
+
+This section assumes you've seen previous example of [using Ghidra with PCSX2](#decompiler-usage-1). The RAM from Debugger section above was already dumped and analyzed in new Ghidra project. Let's research starting from [initially seen code](./pcsx2-debugger-3/pcsx2-debugging-1.png):
+
+![](./pcsx2-decompiler-3/ghidra-decompiler-pcsx-1.png)
+
+Ghidra did not analyze this at all, not a problem. Disassembling that address and then defining a Function emits code that matches disassembly seen in Debugger:
+
+![](./pcsx2-decompiler-3/ghidra-decompiler-pcsx-1a.png)
+
+Same previously seen `0x70` offset. Unfortunately there are no XREFs to this function so I'd have to revisit debugger to figure out what calls this function, but for some reason unknown to me, debugger doesn't show anything in the call stack, meaning I have to either check `ra` register value (return address), or keep pressing *Step Over* until I reach `jr ra` instruction. If it gets tedious to press Step Over many times in PCSX2 debugger, you can Right Click `jr ra` instruction -> Run to Cursor. All good debuggers have such functionality.
+
+I find out that instruction at `0x2a94e8` called the function shown above. Here's the decompiler output near that call:
+
+![](./pcsx2-decompiler-3/ghidra-decompiler-pcsx-2.png)
+
+There's `while (true)` present (line 14), and this loop ends only when some counter named `local_30` gets big enough (lines 17 and 35), implying there's iteration involved. If you look good enough at line 20 with indirect call to previously shown function, the function argument depends on `iVar1` which is actually `iVar2` one line above and `iVar2` comes from `FUN_002b07f0` [portions of which](./pcsx2-debugger-3/pcsx2-debugging-3.png) have already been seen, let's check how those portions got decompiled:
+
+![](./pcsx2-decompiler-3/ghidra-decompiler-pcsx-3.png)
+
+Another loop, this time it's *do while*.
+
+Line 25 is crucial here - pointer at `param1 + 0x10` is followed, and what's located `0x8` bytes after is written to `param1 + 0x10` itself, and it just keeps happening because of *do while* loop. You should figure the resemblance to how you could write code for iterating linked list, because you'd have some pointer variable storing a node you're currently at.
+
+If you were to revisit debugger, you could notice that `param_1 + 0x10` results in `0xB96644` - value of which was seen in Memory Search previously and was discarded as unreliable, you can now see why: it acts as intermediate variable for *traversing* linked list nodes.
+
+So the `0x70` was seen in the decompiled code for `FUN_002b2528`, the `0x4` offset can be seen on line 16 of `FUN_002a94a8` - which becomes part of `iVar4` which is `param_1` for `FUN_002b07f0`. The `0x8` offsets for traversing linked list are at Line 25 of `FUN_002b07f0`. The only question is to figure where `param_1` for `FUN_002a94a8` originates from and I mentioned I'd try to figure that out using Ghidra.
+
+There are many XREFs for `FUN_002a94a8` so I have to revisit debugger and check what called that function, which happened to be `FUN_002ad830`:
+
+![](./pcsx2-decompiler-3/ghidra-decompiler-pcsx-4.png)
+![](./pcsx2-decompiler-3/ghidra-decompiler-pcsx-4a.png)
+![](./pcsx2-decompiler-3/ghidra-decompiler-pcsx-4b.png)
+
+Quite simple, there's pointer stored at `0x3fc678`, it has value of `0xB96020`. Offset of `0x39c` to that address leads to `0xB96020 + 0x39c = 0xB963BC`. That address holds another pointer, and it leads to `0xB96630`, which is very close to what achievement code have been using as a base.
 
 ## **Appendix**
 
