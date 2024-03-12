@@ -350,10 +350,14 @@ It's also worth a try when you just want to investigate different code accessing
 
 ![](./pcsx-debugger/pcsx-breakpoint-added.png)
 
-3. Naturally trigger a change of your value in-game: I just shoot the missile one more time. The emulation pauses, I can analyze the code now
+3. Naturally trigger a change of your value in-game: I just shoot the missile one more time. The emulation pauses, *the breakpoint was hit*, I can analyze the code now
     * I may need to click on Jump to PC button if I forgot to tick Follow PC checkbox, reminder that PC stands for Program Counter - the memory address of instruction that CPU will execute
 
-An arrow points at the instruction: `800719a8: sw $v0, 0x001c($a1)`, which means: store word (4 bytes for 32-bit MIPS!) from `v0` register into an address specified by `a1` register + offset by `0x1c`
+After breakpoint was hit or if you manually Pause the emulation, the Assembly window should look like on screenshot below. Take a note of yellow arrow pointing at *instruction* at `800719a8`. Take a note of register list on the right, including `pc` at the bottom having same value of `800719a8`. Remember that if you ever get lost in all this assembly code, and some other debugger doesn't have Jump to PC button - you can always find your way back by following address stored in `pc` register.
+
+I also have to remind that *code and data* reside together in same 2MB of memory for PSX (remember the [code segment](https://static.javatpoint.com/cpages/images/memory-layout-in-c.png)). Assembly window here is merely interpreting portion of memory as code. In addition to instruction address `800719a8` and mnemonic `sw`, there's machine code included: `aca2001c` (in big endian), and you can see [exactly same machine code in Memory Editor](./pcsx-debugger/pcsx-machine-code.png).
+
+**Now finally to explaining the instruction:** `800719a8: sw $v0, 0x001c($a1)`, which means: store word (4 bytes for 32-bit MIPS!) from `v0` register into an address specified by `a1` register + offset by `0x1c`
 
 The `v0` register on top right shows value of `0x46` (70) - lesser amount of missiles indeed; `a1` register shows the address of `0x801717bc`
 
@@ -365,7 +369,7 @@ So everything is correct and makes sense here. I'm already highly confident that
 
 To figure that out, I have to read the code that precedes the one I broke into, I have to ask a question: *where is the most recent instruction that affected `a1`?* In this case the instruction is close, at `80071990: lw $a1, 0x0524($gp)`, which means: load word (4 bytes) from address specified at `gp` register + offset by `0x0524` into register `a1`
 
-The `gp` register, which didn't fit into screenshot, shows value of `0x800bcb74`. To get an offset against `gp` register of all things means that my search ends here. `0x800bcb74 + 0x0524 = 0x800bd098`, if I follow that address in Memory Editor, I notice it indeed contains the same value I saw before on `a1` register: `0x801717bc`.
+The `gp` register shows value of `0x800bcb74`. To get an offset against `gp` register of all things means that my search ends here. `0x800bcb74 + 0x0524 = 0x800bd098`, if I follow that address in Memory Editor, I notice it indeed contains the same value I saw before on `a1` register: `0x801717bc`.
 
 ![](./pcsx-debugger/pcsx-memory-editor2.png)
 
