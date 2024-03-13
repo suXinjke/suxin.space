@@ -35,6 +35,8 @@ function naiveDecodeHTMLEntities(str: string) {
     .replace(/&quot;/g, '"')
 }
 
+const HOSTNAME = 'suxin.space'
+
 marked.use({
   renderer: {
     code(code, lang) {
@@ -56,6 +58,17 @@ marked.use({
       const id = slugger.slug(raw)
       const link = `<a href="#${id}" class="anchor-link"><span>¶</span></a>`
       return `<h${level} id="${id}">${text}${link}</h${level}>`
+    },
+    link(href, title, text) {
+      const parsedUrl = new URL(href, `https://${HOSTNAME}/`)
+      const isExternal = parsedUrl.host !== HOSTNAME
+      const isImage = ['jpg', 'jpeg', 'png', 'gif'].some(ext => parsedUrl.pathname.endsWith(ext))
+
+      const attrHref = href ? ` href="${href}"` : ''
+      const attrTitle = title ? ` title="${title}"` : ''
+      const attrNewTab = isExternal || isImage ? ' target="_blank" rel="noopener"' : ''
+
+      return `<a ${attrHref}${attrTitle}${attrNewTab}>${text}</a>`
     },
   },
 })
@@ -139,8 +152,8 @@ function makeMetaContext(currentRoute: string) {
         throw new Error('you forgot to set meta')
       }
 
-      const url = `https://suxin.space${currentRoute}`
-      const image = meta.image && `https://suxin.space${meta.image}`
+      const url = `https://${HOSTNAME}${currentRoute}`
+      const image = meta.image && `https://${HOSTNAME}${meta.image}`
 
       let metaTitle = 'suXin space'
       const metaSubtitle = meta.title !== undefined ? meta.title : title
@@ -223,16 +236,16 @@ export const render = {
     return `<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <atom:link href="https://suxin.space/feed.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://${HOSTNAME}/feed.xml" rel="self" type="application/rss+xml" />
     <title>suXin space</title>
-    <link>https://suxin.space/notes/</link>
+    <link>https://${HOSTNAME}/notes/</link>
     <description>Getting things done and sharing how</description>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <generator>suXin space</generator>
     <language>en</language>
     ${notes
       .map(note => {
-        const link = `https://suxin.space/notes/${note.id}/`
+        const link = `https://${HOSTNAME}/notes/${note.id}/`
 
         return `<item>
       <title><![CDATA[${note.title}]]></title>
