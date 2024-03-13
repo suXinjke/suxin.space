@@ -10,7 +10,7 @@ import postcssCustomMedia from 'postcss-custom-media'
 import { marked } from 'marked'
 import fm from 'front-matter'
 
-import glob from 'glob'
+import { globSync } from 'glob'
 
 import layout from './frontend/layout'
 import homePage from './frontend/homePage'
@@ -530,7 +530,7 @@ export interface NoteData {
   seeAlso?: string[]
 }
 const notes: Record<string, NoteData> = {}
-export const noteDirs = glob.sync(`./frontend/notes/*/`).reduce((prev, cur) => {
+export const noteDirs = globSync(`./frontend/notes/*/`).reduce((prev, cur) => {
   const { name } = path.parse(cur)
   const nameWithoutDate = name.replace(/^(.+_)/, '')
 
@@ -544,7 +544,7 @@ function getNoteFile(noteName: string) {
     return null
   }
 
-  const filePaths = glob.sync(`./frontend/notes/${noteDirs[noteName]}/*.md`)
+  const filePaths = globSync(`./frontend/notes/${noteDirs[noteName]}/*.md`)
   if (filePaths.length > 1) {
     throw new Error(`Note ${noteName} has more than one markdown file - that should never happen`)
   }

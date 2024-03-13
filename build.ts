@@ -1,11 +1,9 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import * as util from 'util'
 
 import sharp from 'sharp'
 
-import _glob from 'glob'
-const glob = util.promisify(_glob)
+import { glob } from 'glob'
 
 import { getItemData, getNoteData, noteDirs, readAndProcessCSS, render } from './common'
 
@@ -18,7 +16,7 @@ function mkdirCustom(filePaths: string[]) {
   const fileDirs = new Set<string>()
 
   for (const filePath of filePaths) {
-    fileDirs.add(path.parse(filePath).dir.replace(/^.\/(frontend|static)/, outputDir))
+    fileDirs.add(path.parse(filePath).dir.replace(/^(frontend|static)/, outputDir))
   }
 
   for (const dir of fileDirs) {
@@ -30,14 +28,14 @@ function mkdirCustom(filePaths: string[]) {
 
 async function build() {
   const [itemNames, noteDirsAndSubdirs, assetFilePaths, staticFilePaths] = await Promise.all([
-    glob('./frontend/items/**/*.md').then(itemFilePaths =>
+    glob('./frontend/items/**/*.md', { posix: true }).then(itemFilePaths =>
       itemFilePaths.map(f => path.parse(f).name),
     ),
-    glob('./frontend/notes/**/').then(noteDirPaths =>
+    glob('./frontend/notes/**/', { posix: true }).then(noteDirPaths =>
       noteDirPaths.map(f => f.replace(/(notes[\\/])(.+?_)/, '$1')),
     ),
-    glob('./frontend/**/*.@(js|css|jpg|jpeg|png|gif|wav|mp4)'),
-    glob('./static/**/?(*.*|CNAME)', { dot: true }),
+    glob('./frontend/**/*.@(js|css|jpg|jpeg|png|gif|wav|mp4)', { posix: true }),
+    glob('./static/**/?(*.*|CNAME)', { dot: true, posix: true }),
   ])
 
   const itemsToRender = itemNames.filter(f => getItemData(f).html)
@@ -45,7 +43,7 @@ async function build() {
 
   mkdirCustom([
     ...itemsToRender.map(i => `${outputDir}/items/${i}/index.html`),
-    ...noteDirsAndSubdirs.map(n => n + '.'),
+    ...noteDirsAndSubdirs.map(n => n + '/.'),
     ...staticFilePaths,
   ])
 

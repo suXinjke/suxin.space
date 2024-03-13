@@ -1,6 +1,6 @@
 import { h } from 'nano-jsx'
 import * as path from 'path'
-import glob from 'glob'
+import { globSync } from 'glob'
 
 import HeaderText from '@components/header-text'
 import Item from '@components/item'
@@ -37,8 +37,7 @@ function makeGridStyles(s: { height: string; columns: string; rows: string }) {
 }
 
 export default function HomePage() {
-  const showcases = glob
-    .sync('./frontend/items/**/*.md')
+  const showcases = globSync('./frontend/items/**/*.md')
     .map(f => path.parse(f).name)
     .reduce((prev, itemName) => {
       const itemData = getItemData(itemName)

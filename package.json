@@ -11,27 +11,28 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/express": "^4.17.14",
-    "@types/express-ws": "^3.0.1",
-    "@types/glob": "^8.0.0",
+    "@types/express": "^4.17.21",
+    "@types/express-ws": "^3.0.4",
+    "@types/glob": "^8.1.0",
     "@types/marked": "^4.0.8",
-    "@types/prismjs": "^1.26.0",
-    "express": "^4.18.2",
+    "@types/prismjs": "^1.26.3",
+    "express": "^4.18.3",
     "express-ws": "^5.0.2",
     "ts-node-dev": "^2.0.0"
   },
   "dependencies": {
-    "classnames": "^2.3.2",
+    "classnames": "^2.5.1",
     "front-matter": "^4.0.2",
-    "glob": "^8.0.3",
+    "glob": "^10.3.10",
     "marked": "^4.2.4",
-    "nano-jsx": "^0.0.34",
-    "postcss": "^8.4.19",
-    "postcss-custom-media": "^9.0.1",
-    "postcss-nested": "^6.0.0",
+    "nano-jsx": "^0.1.0",
+    "postcss": "^8.4.35",
+    "postcss-custom-media": "^10.0.3",
+    "postcss-nested": "^6.0.1",
     "prismjs": "^1.29.0",
     "sharp": "^0.33.2",
-    "ts-node": "^10.9.1",
-    "tsconfig-paths": "^4.1.1"
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.4.2"
   }
 }
