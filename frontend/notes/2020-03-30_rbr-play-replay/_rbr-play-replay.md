@@ -14,7 +14,7 @@ About a year ago I've got an idea for a **Richard Burns Rally** plugin that woul
 
 Since then I still didn't start working on this, one of the reasons was the fact that the plugin would be disappointing for me if I wouldn't be able to compare my time against any replays available on the internet. Technically, it should be possible to take any replay, play it and let the plugin record the splits. There's only one problem: **original plugin interface is barebones and doesn't allow to play replays**, which means you don't have proper control of when you start the replay, meaning you can't easily setup the recording routine.
 
-So this is my problem: **I have to find the function that the game calls to load and begin replay playback**, so I can call it myself any time in my C++ plugin code. I already had reverse engineering experience, [but it was limited to parsing 3D model data](/notes/cw-reverse-engineering-models), this is the first time I had legit game with legit need to use debugger and disassembler, something that is very out of my comfort zone.
+So this is my problem: **I have to find the function that the game calls to load and begin replay playback**, so I can call it myself any time in my C++ plugin code. I already had reverse engineering experience, [but it was limited to parsing 3D model data](/notes/cw-reverse-engineering-models/), this is the first time I had legit game with legit need to use debugger and disassembler, something that is very out of my comfort zone.
 
 ![This guy on bottom has secret pocket with Red Bull can inside if you wonder](./replay.jpg)
 

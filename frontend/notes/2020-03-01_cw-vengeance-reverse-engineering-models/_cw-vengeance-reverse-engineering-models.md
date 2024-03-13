@@ -10,7 +10,7 @@ seeAlso:
     - cw-reverse-engineering-models
     - cw2-oddities-and-cut-content
 ---
-This note is the sequel to [Reverse engineering Colony Wars Red Sun models](/notes/cw-reverse-engineering-models).
+This note is the sequel to [Reverse engineering Colony Wars Red Sun models](/notes/cw-reverse-engineering-models/).
 After I finished my work with **Red Sun**, I knew I will eventually get to the previous game in the series:
 **Colony Wars Vengeance**, which is arguably my most favorite in the series.
 
@@ -18,7 +18,7 @@ I expected the process to be easier compared to **Red Sun** because I already ha
 structure of game resources theirselves would probably be more simple. My expectations turned out to be true,
 most of the work took about a week or less at moderate pace.
 
-I will mostly focus on differences compared to **Red Sun** rather than how I approached the problem, the latter was mostly covered in the [previous note](/notes/cw-reverse-engineering-models).
+I will mostly focus on differences compared to **Red Sun** rather than how I approached the problem, the latter was mostly covered in the [previous note](/notes/cw-reverse-engineering-models/).
 
 ## **Resource extraction**
 

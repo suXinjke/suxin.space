@@ -4,7 +4,7 @@ date: '2019-07-09'
 description: Most of the Nuxt Markdown blogging solutions lead to bloated bundle size and up to four copies of your content. All while the setup is also being more convoluted than it should. I suggest we should respect user's bandwidth and either fix the issue, or just use Gatsby/Gridsome.
 image: ./nuxt-icon-bw.png
 ---
-In a [previous note](/notes/about-this-website) I wrote about my experience on making this personal website and the way I wanted to manage my content. During those days I relied on [**Nuxt**](https://nuxtjs.org/) as a static website generator of choice, but I realised that **it won't scale for me well enough** unless I figure out more hacks on how I should manage my **Markdown files**. I switched to [**Gridsome**](https://gridsome.org/) instead, which *fully* focuses on static generation part, and actually serves me in a better and more straightforward way.
+In a [previous note](/notes/about-this-website/) I wrote about my experience on making this personal website and the way I wanted to manage my content. During those days I relied on [**Nuxt**](https://nuxtjs.org/) as a static website generator of choice, but I realised that **it won't scale for me well enough** unless I figure out more hacks on how I should manage my **Markdown files**. I switched to [**Gridsome**](https://gridsome.org/) instead, which *fully* focuses on static generation part, and actually serves me in a better and more straightforward way.
 
 In this note I want to address problems I had with managing Markdown files on **Nuxt**.
 
