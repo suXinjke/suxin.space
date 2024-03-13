@@ -2,9 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as util from 'util'
 
-import imagemin from 'imagemin'
-import imageminMozjpeg from 'imagemin-mozjpeg'
-import imageminPngquant from 'imagemin-pngquant'
+import sharp from 'sharp'
 
 import _glob from 'glob'
 const glob = util.promisify(_glob)
@@ -76,15 +74,10 @@ async function build() {
 
     if (ext === '.css') {
       readAndProcessCSS({ filePath }).then(css => fs.promises.writeFile(outputFilePath, css))
-    } else if (['.png', '.jpg', '.jpeg'].includes(ext)) {
-      imagemin([filePath], {
-        plugins: [
-          imageminMozjpeg(),
-          imageminPngquant({
-            quality: [0.6, 0.8],
-          }),
-        ],
-      }).then(files => fs.promises.writeFile(outputFilePath, files[0].data))
+    } else if (ext === '.png') {
+      sharp(filePath).png({ quality: 80 }).toFile(outputFilePath)
+    } else if (ext === '.jpg' || ext === '.jpeg') {
+      sharp(filePath).jpeg({ mozjpeg: true }).toFile(outputFilePath)
     } else {
       fs.promises.copyFile(filePath, outputFilePath)
     }
