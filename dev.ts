@@ -78,6 +78,10 @@ app.get('/feed.xml', (req, res) => {
   res.type('xml').send(render.rss())
 })
 
+app.get('/sitemap.xml', (req, res) => {
+  res.type('xml').send(render.sitemap())
+})
+
 app.use((req, res) => {
   res.status(404).send(render.notFound())
 })

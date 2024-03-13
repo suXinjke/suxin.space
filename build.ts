@@ -57,6 +57,7 @@ async function build() {
     fs.promises.writeFile(`${outputDir}/index.html`, render.home()),
     fs.promises.writeFile(`${outputDir}/404.html`, render.notFound()),
     fs.promises.writeFile(`${outputDir}/feed.xml`, render.rss()),
+    fs.promises.writeFile(`${outputDir}/sitemap.xml`, render.sitemap()),
     fs.promises.writeFile(`${outputDir}/notes/index.html`, render.allNotes()),
     ...itemsToRender.map(i =>
       fs.promises.writeFile(`${outputDir}/items/${i}/index.html`, render.items(getItemData(i))),

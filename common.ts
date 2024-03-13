@@ -259,6 +259,41 @@ export const render = {
   </channel>
 </rss>`
   },
+  sitemap() {
+    const notes = Object.entries(noteDirs)
+      .sort((a, b) => b[1].localeCompare(a[1]))
+      .map(n => n[0])
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+>
+${notes
+  .map(note => {
+    return `<url>
+  <loc>https://${HOSTNAME}/notes/${note}/</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>`
+  })
+  .join('\n  ')}
+  <url>
+    <loc>https://${HOSTNAME}/notes/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://${HOSTNAME}/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>`
+  },
 }
 
 export function readAndProcessCSS({ filePath, minify = false }) {
