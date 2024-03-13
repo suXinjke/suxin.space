@@ -3,7 +3,6 @@ import * as path from 'path'
 
 import { createContext, h, renderSSR, useContext } from 'nano-jsx'
 
-import cssnano from 'cssnano'
 import postcss, { AcceptedPlugin } from 'postcss'
 import postcssNested from 'postcss-nested'
 import postcssCustomMedia from 'postcss-custom-media'
@@ -296,11 +295,8 @@ ${notes
   },
 }
 
-export function readAndProcessCSS({ filePath, minify = false }) {
+export function readAndProcessCSS({ filePath }) {
   const plugins = [postcssCustomMedia, postcssNested] as AcceptedPlugin[]
-  if (minify) {
-    plugins.push(cssnano)
-  }
 
   return fs.promises
     .readFile(filePath)

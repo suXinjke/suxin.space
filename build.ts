@@ -2,8 +2,6 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as util from 'util'
 
-import { minify as terser } from 'terser'
-
 import imagemin from 'imagemin'
 import imageminMozjpeg from 'imagemin-mozjpeg'
 import imageminPngquant from 'imagemin-pngquant'
@@ -77,9 +75,7 @@ async function build() {
       .replace(/(notes[\\/])(.+?_)/, '$1')
 
     if (ext === '.css') {
-      readAndProcessCSS({ filePath, minify: true }).then(css =>
-        fs.promises.writeFile(outputFilePath, css),
-      )
+      readAndProcessCSS({ filePath }).then(css => fs.promises.writeFile(outputFilePath, css))
     } else if (['.png', '.jpg', '.jpeg'].includes(ext)) {
       imagemin([filePath], {
         plugins: [
@@ -89,11 +85,6 @@ async function build() {
           }),
         ],
       }).then(files => fs.promises.writeFile(outputFilePath, files[0].data))
-    } else if (ext === '.js') {
-      fs.promises
-        .readFile(filePath)
-        .then(f => terser(f.toString()))
-        .then(result => fs.promises.writeFile(outputFilePath, result.code))
     } else {
       fs.promises.copyFile(filePath, outputFilePath)
     }

@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "classnames": "^2.3.2",
-    "cssnano": "^5.1.14",
     "front-matter": "^4.0.2",
     "glob": "^8.0.3",
     "imagemin": "^7.0.0",
@@ -35,7 +34,6 @@
     "postcss-custom-media": "^9.0.1",
     "postcss-nested": "^6.0.0",
     "prismjs": "^1.29.0",
-    "terser": "^5.16.1",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.1"
   }
