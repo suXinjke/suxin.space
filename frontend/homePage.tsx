@@ -105,6 +105,25 @@ export default function HomePage() {
       </section>
 
       <section>
+        <HeaderText className="section-header" icon="solid/trophy" header="RetroAchievements" />
+        <div
+          class="grid"
+          style={makeGridStyles({
+            height: '32rem',
+            columns: '1fr 1fr 1fr 1fr',
+            rows: '1fr 1fr',
+          })}
+        >
+          <ItemTitle col="1" row="1" item="ra" />
+          <ItemTitle col="1" row="2" item="ra-cw" />
+          <ItemTitle col="2" row="1 / span 2" item="ra-gt4" />
+          <ItemTitle col="3" row="1" item="ra-gt3" />
+          <ItemTitle col="3" row="2" item="ra-driver" />
+          <ItemTitle col="4" row="1 / span 2" item="ra-ace" />
+        </div>
+      </section>
+
+      <section>
         <HeaderText className="section-header" icon="solid/rocket" header="Colony Wars" />
         <div
           class="grid"
@@ -134,11 +153,10 @@ export default function HomePage() {
         >
           <ItemTitle col="1 / span 2" row="1" item="about-this-website" />
           <ItemTitle col="3 / span 2" row="1" item="rss" />
-          <ItemTitle col="5 / span 2" row="1" item="retroachievements" />
           <ItemTitle col="1 / span 2" row="2 / span 2" item="blender-goldsource" />
           <ItemTitle col="3 / span 2" row="2 / span 2" item="secretary-bird" />
-          <ItemTitle col="5 / span 2" row="2" item="chirpinator" />
-          <ItemTitle col="5 / span 2" row="3" item="barasite-eve" />
+          <ItemTitle col="5 / span 2" row="1" item="chirpinator" />
+          <ItemTitle col="5 / span 2" row="2 / span 2" item="barasite-eve" />
           <ItemTitle col="1 / span 3" row="4" item="rbr-cz-tourney-creator" />
           <ItemTitle col="4 / span 3" row="4" item="rbr-cz-analysis" />
         </div>
