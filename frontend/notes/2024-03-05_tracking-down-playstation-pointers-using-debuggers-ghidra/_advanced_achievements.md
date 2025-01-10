@@ -367,6 +367,22 @@ The `v0` register on top right shows value of `0x46` (70) - lesser amount of mis
 
 So everything is correct and makes sense here. I'm already highly confident that `a1` register contains the pointer, and `0x1c` is an offset to that pointer, there's only one question left: **where did value in `a1` come from?**
 
+```question
+What is that (pseudo) at RAM:0x800719d0 ?
+
+Pseudo indicates a [pseudoinstruction](https://en.wikibooks.org/wiki/MIPS_Assembly/Pseudoinstructions), what you see here is two instructions being condensed by disassembler. This `li $v0, 0x00010102` is something you could've written yourself in assembly language, only for it to to compile into two instructions instead:
+
+![](./pcsx-debugger/pcsx-pseudo1.png)
+
+Pseudoinstructions can be confusing during debugging while stepping through code, because they don't fully perfectly represent what's actually got compiled.
+
+It's possible to disable automatic pseudoinstructions by opening menu in Assembly window and ticking off: Options -> Combined pseudo-instruction
+
+![](./pcsx-debugger/pcsx-pseudo2.png)
+
+Ticking off Pseudo-instructions filling will only remove the `(pseudo)` label
+```
+
 To figure that out, I have to read the code that precedes the one I broke into, I have to ask a question: *where is the most recent instruction that affected `a1`?* In this case the instruction is close, at `80071990: lw $a1, 0x0524($gp)`, which means: load word (4 bytes) from address specified at `gp` register + offset by `0x0524` into register `a1`
 
 The `gp` register shows value of `0x800bcb74`. To get an offset against `gp` register of all things means that my search ends here. `0x800bcb74 + 0x0524 = 0x800bd098`, if I follow that address in Memory Editor, I notice it indeed contains the same value I saw before on `a1` register: `0x801717bc`.
@@ -390,6 +406,8 @@ Why analyze RAM dump instead of original executable?
 Complex PSX games sometimes rely on concept of *overlays* - code that's loaded/swapped at runtime to work around limited 2MB of RAM. If you analyze original executable only - you risk missing the code that was loaded during the exact moment you care about.
 
 And yet I got an impression that **ghidra_psx_ldr** extension that's mentioned below works better with original executables. It's still possible to map overlays for analysis - but that's additional potentially unnecessary work for research-and-forget situations like tracking pointers for achievement development. You'd prefer to stick to original executable if you want to analyze entire game thoroughly.
+
+Sometimes executables can be outright encrypted, but would be decrypted at runtime and available in RAM dump. That happened to be the case with [WRC Rally Evolved](https://retroachievements.org/game/19283) for PS2.
 ```
 
 2. [Install Ghidra](#installing-ghidra)
@@ -513,7 +531,7 @@ Pointer [32-bit]
 
 ### **Debugger Usage**
 
-1. Install [PCSX2](https://pcsx2.net/downloads) emulator, **make sure it's Nightly build**
+1. Install [PCSX2](https://pcsx2.net/downloads) emulator, today it's fine to use both stable and nightly builds, as long as you stay on version 2.0 or higher
     * You also must have PS2 BIOS dump to make the emulator work
     * I will not describe initial setup steps as those are straightforward, the first launch will guide you through these
     * Run the game to make sure it works
@@ -919,7 +937,9 @@ PSP CPU is [Allegrex](https://www.psdevwiki.com/psp/Allegrex), based on R4000 wh
 
 > *Arguments are passed through following registers: `$a0, $a1, $a2, $a3, $t0, $t1, $t2, $t3`, then on the stack*
 
-It's also important to note quite annoying [memory mapping](https://www.psdevwiki.com/psp/Tachyon#Memory_mapping), with 24MB of user memory you'd care about being mapped at `0x08800000`, which for RAIntegration and rcheevos will actually be at `0x0`. Here's another example: what RetroAchievement developers consider `0xACAAFE` would be located at `0x092CAAFE` from PSP and emulator's point of view.
+It's also important to note quite annoying [memory mapping](https://www.psdevwiki.com/psp/Tachyon#Memory_mapping), with 8MB of kernel memory mapped at `0x08000000` and 24MB of user memory you'd care about mapped at `0x08800000`. RAIntegration and rcheevos address for `0x0` will match `0x08000000`.
+
+Here's another example: what RetroAchievement developers consider `0xACAAFE` would be located at `0x08ACAAFE` from PSP and PPSSPP emulator's point of view.
 
 ![Memory regions displayed in PPSSPP](./ppsspp-memory-view.png)
 
@@ -942,15 +962,7 @@ pointer [32-bit]
 
 Install [PPSSPP](https://www.ppsspp.org/download/) emulator and run your game to make sure it works. Emulator works out of box very well and doesn't require much of additional setup.
 
-The real problem is lack of Memory Search that PCSX-Redux and PCSX2 have, and at the moment of writing this blogpost - PPSSPP does not support RAIntegration either. This leaves you with using **Cheat Engine** for tracking down values in memory and targeting for a breakpoint.
-
-When game is running, you can open menu: Debug -> Copy PSP memory base address, *note it*. In my case it was `00000234c3360000`
-
-With Cheat Engine attached to `PPSSPPWindows64.exe`, search the values you want **starting from**: `BaseAddress + 8800000` **stopping at**: `BaseAddress + 8800000 + 1800000`
-
-For me the value at `0x234CC8F2BA0` was the one I needed, afterwards I have to subtract the previously noted base address from it: `0x234CC8F2BA0 - 00000234c3360000 = 0x9592BA0`. **The confirmed target I will be dealing with is located at `0x9592BA0`**
-
-![](./ppsspp-cheat-engine.png)
+To search the values, you can setup either [RAIntegration](#using-ppsspp-with-raintegration) or [Cheat Engine](#using-ppsspp-with-cheat-engine). For example below, assume the value has already been found using RAIntegration, and is located at **`0x1592BA0`**, which when translated to actual address on PSP, would be `0x1592BA0 + 0x8000000 = 0x9592BA0`
 
 Now in PPSSPP I can open menu: Debug -> Disassembly (CTRL+D).
 
@@ -964,11 +976,9 @@ Now in PPSSPP I can open menu: Debug -> Disassembly (CTRL+D).
 
 Immediately the `0881C7F8 sw a1, 0x21D0(a0)` instruction indicates the `0x21D0` offset to pointer stored at `a0`: `0x095909D0`, the offset matches the original code note. Originally when I helped with this, I didn't bother researching where that pointer originated from via code, and went to Memory search for `0x095909D0` instead:
 
-![](./ppsspp-debugger/ppsspp-candidates.png)
+![The address is already noted and credited by that fellow developer I helped](./ppsspp-debugger/ppsspp-candidates2.png)
 
-I give the first candidate a try, if you subtract previously found base address, it becomes: `0x234CBE77798 - 00000234c3360000 = 0x8B17798`, which matches the original code note if you get rid of the prefix.
-
-Just like in previous examples, it wouldn't hurt to validate this pointer using Debugger, so I put the break-on-read breakpoint of size 4 at `0x8B17798` and see what happens:
+Just like in previous examples, it wouldn't hurt to validate this pointer using Debugger, so I put the break-on-read breakpoint of size 4 at `0x8B17798`, which is `0xB17798 + 0x8000000 = 0x8B17798` and see what happens:
 
 ![](./ppsspp-debugger/ppsspp-debugger-2.png)
 
@@ -1336,6 +1346,31 @@ If you're interested about EEMem thing, check [Where did EEMem thing come from?]
 
 ![](./pcsx2-cheat-engine-dump.png)
 
+### **Using PPSSPP with RAIntegration**
+
+Drop **RA_Integration.dll** into PPSSPP directory so you can use it to track down values, alternatively [you can use Cheat Engine](#using-ppsspp-with-cheat-engine)
+
+* Unfortunately there's no direct easy way to get RAIntegration, you either get it as part of [RALibRetro](https://retroachievements.org/bin/RALibretro-x64.zip), or in RetroAchievements Discord server if you're a developer
+
+1. Launch PPSSPP and follow: Settings -> Tools -> RetroAchievements
+2. Login into your RetroAchievements account
+3. Within same RetroAchievements settings, open Developer tools tab and tick **Enable RAIntegration (for achievement development)**
+
+RAIntegration can now be accessed through menu: RetroAchievements
+
+### **Using PPSSPP with Cheat Engine**
+
+PPSSPP used to not have RAIntegration support, and you couldn't do convenient memory searches either. It's still worth to keep the details on how Cheat Engine can be used for that.
+
+When game is running, you can open menu in PPSSPP: Debug -> Copy PSP memory base address, *note it*. For example, `00000234c3360000`
+
+With Cheat Engine attached to `PPSSPPWindows64.exe`, search the values you want **starting from**: `BaseAddress + 8800000` **stopping at**: `BaseAddress + 8800000 + 1800000`, 1800000 being a hex number representing 24MB size of user memory.
+
+For me the value at `0x234CC8F2BA0` was the one I needed, afterwards I have to subtract the previously noted base address from it: `0x234CC8F2BA0 - 00000234c3360000 = 0x9592BA0`. **The confirmed target I would be dealing with is located at `0x9592BA0`**
+
+For RAIntegration, this address would be `0x9592BA0 - 0x8000000 = 0x1592BA0`, note that I subtract from base address where kernel memory is located, not user memory.
+
+![](./ppsspp-cheat-engine.png)
 
 ### **Additional resources**
 
@@ -1348,3 +1383,12 @@ If you're interested about EEMem thing, check [Where did EEMem thing come from?]
 [**ee.jpg**](https://commons.wikimedia.org/wiki/File:Emotion_Engine_%26_Graphics_Synthesizer_%287583178660%29.jpg) - taken from WikiMedia for a thumbnail, by Dilshan Jayakody
 
 *Would appreciate if you can suggest to add more resources here, in english*
+
+### **Updates**
+
+**JAN 10 2025**:
+* In [PPSSPP](#pointer-psp-game-ppsspp) example, fixed severe inaccuracies regarding mapping of physical PSP memory addresses to RAIntegration / rcheevos memory addresses
+* In [PPSSPP](#pointer-psp-game-ppsspp) example, RAIntegration is now preferred instead of Cheat Engine, because PPSSPP now supports RAIntegration
+* In [PCSX2](#debugger-usage-1) example, both stable and nightly builds are now suggested.
+* Added [commentary on MIPS pseudoinstructions](#what-is-that-pseudo-at-ram0x800719d0-) in PCSX-Redux example.
+* Added comment about encrypted executables in [question about analyzing RAM dumps](#why-analyze-ram-dump-instead-of-original-executable)
